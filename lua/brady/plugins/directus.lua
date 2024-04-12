@@ -1,5 +1,5 @@
 return {
-    dir = "~/sbr/neovim",
+    dir = "~/sbr/telescope-directus.nvim",
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
         -- local telescope = require("telescope")
@@ -8,6 +8,6 @@ return {
         local directus = require("directus")
         local sbr_config = require("sbr.config")
 
-        directus.setup(sbr_config.directus_local)
+        directus.setup(sbr_config.directus_uat)
     end
 }

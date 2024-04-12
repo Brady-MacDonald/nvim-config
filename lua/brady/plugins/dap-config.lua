@@ -1,10 +1,9 @@
 --------------------------
 -- DAP Config
 --------------------------
-
 return {
     {
-        -- NeoVIM DAP Client
+        -- Nvim DAP Client
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require("dap")
@@ -14,7 +13,7 @@ return {
             vim.keymap.set("n", "<leader>si", dap.step_into)
             vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
             vim.keymap.set("n", "<leader>B", function()
-                -- Toggle condigional break point
+                -- Conditional breakpoint
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
             end)
 
@@ -47,23 +46,50 @@ return {
         end
     },
     {
-        -- UI for debugger
         "rcarriga/nvim-dap-ui",
         dependencies = { "nvim-neotest/nvim-nio" },
         config = function()
             local dapui = require("dapui")
 
-            dapui.setup()
+            dapui.setup({
+                force_buffers = true,
+                layouts = {
+                    {
+                        elements = {
+                            {
+                                id = "scopes",
+                                size = 0.25, -- Can be float or integer > 1
+                            },
+                            { id = "breakpoints", size = 0.25 },
+                            { id = "stacks",      size = 0.25 },
+                            { id = "watches",     size = 0.25 },
+                        },
+                        size = 40,
+                        position = "left", -- Can be "left" or "right"
+                    },
+                },
+                floating = {
+                    max_height = nil,
+                    max_width = nil,
+                    border = "single",
+                    mappings = {
+                        ["close"] = { "q", "<Esc>" },
+                    },
+                },
+            })
 
-            vim.keymap.set("n", "<leader>do", dapui.open)
-            vim.keymap.set("n", "<leader>dc", dapui.close)
-            vim.keymap.set("n", "<leader>dt", dapui.toggle)
+            vim.keymap.set("n", "<leader>do", dapui.open, { desc = "DapUI: Debugger Open" })
+            vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "DapUI: Debugger Close" })
+            vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "DapUI: Debugger Toggle" })
+            vim.keymap.set("n", "<leader>df", dapui.float_element, { desc = "DapUI: Float Element" })
 
             vim.keymap.set("n", "<leader>dv", dapui.eval)
         end
     },
 
-    -- Language Specific Debug Adapters
+    --------------------------
+    -- Language Specific Debuggers
+    -----------------------------
 
     -- Go Delve debugger installed with Mason
     {
@@ -78,20 +104,18 @@ return {
 
     -- javascript/typescript
     {
-        -- The JS debug adapter
+        -- JS debug adapter
         "mxsdev/nvim-dap-vscode-js",
-        -- The JS debugger
         dependencies = {
-            "microsoft/vscode-js-debug", -- Installed through Mason?
+            -- The JS debugger
+            "microsoft/vscode-js-debug", -- Installed through Mason
             build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
         },
         config = function()
             local dap_node = require("dap-vscode-js")
 
             dap_node.setup({
-                -- debugger_cmd = { "/home/bmacdonald/.local/share/nvim/mason/packages/js-debug-adapter/js-debug-adapter" },
                 debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",
-                -- node_path = "node",
                 adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
             })
         end

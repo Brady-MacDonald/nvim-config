@@ -3,9 +3,6 @@
 
 return {
     {
-        dir = '~/apps/treesitting',
-    },
-    {
         dir = '~/apps/autocmd',
     },
     {
