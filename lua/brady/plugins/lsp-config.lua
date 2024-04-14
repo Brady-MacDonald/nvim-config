@@ -23,10 +23,14 @@ return {
         end
     },
 
+    { "folke/neodev.nvim" },
+
     -- Nvim-LspConfig: Used by the built in neovim LSP client for configuration
     {
         "neovim/nvim-lspconfig",
         config = function()
+            require("neodev").setup()
+
             local lspconfig = require("lspconfig")
             local util = require("lspconfig.util")
 

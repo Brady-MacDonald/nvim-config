@@ -27,4 +27,3 @@ ls.snippets = {
         ),
     }
 }
-

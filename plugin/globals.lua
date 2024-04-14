@@ -1,5 +1,3 @@
--- ./plugin folder is automatically executed on NeoVIM startup
-
 -- Global Functions
 
 P = function(t)
