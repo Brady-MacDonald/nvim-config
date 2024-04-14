@@ -1,7 +1,3 @@
--------------
--- TypeScript snipptes
---------------
-
 local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 
@@ -41,32 +37,18 @@ luasnip.add_snippets("typescript", {
 })
 
 local param_log = function()
-    -- Get node at current position
-    local currentNode = vim.treesitter.get_node()
+    local TS = require("brady.treesitter.function_start")
 
-    local TYPESCRIPT_QUERY =
-    "(function_declaration (formal_parameters (required_parameter (identifier) @iden)) @formal) @func"
-    local TYPESCRIPT_FUNC = "function_declaration"
-
-    while currentNode:parent() ~= nil do
-        if (currentNode:type() == TYPESCRIPT_FUNC) then break end
-        currentNode = currentNode:parent()
+    local func_node, paramters = TS.get_func_node("typescript")
+    if func_node == nil then
+        vim.notify("Unable to perform ParameterLog", "error")
+        return
     end
 
     local clg = "console.log('-------------------');"
 
-    local functionNode = currentNode
-    local query = vim.treesitter.query.parse("typescript", TYPESCRIPT_QUERY)
-
-    -- Iterate over lisp captures
-    for id, captureGroup, _ in query:iter_captures(functionNode, 0) do
-        local captureName = query.captures[id]
-        if captureName == "iden" then
-            local start_row, start_col, end_row, end_col = captureGroup:range()
-
-            local param = vim.api.nvim_buf_get_text(0, start_row, start_col, end_row, end_col, {})
-            clg = clg .. "console.log(" .. param[1] .. ");"
-        end
+    for idx, param in ipairs(paramters) do
+        clg = clg .. "console.log(" .. param .. ");"
     end
 
     clg = clg .. "console.log('-------------------');"

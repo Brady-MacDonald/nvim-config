@@ -1,7 +1,3 @@
--------------
--- Javascript snipptes
---------------
-
 local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 
@@ -44,18 +40,26 @@ luasnip.add_snippets("javascript", {
 })
 
 local param_log = function()
+    local TS = require("brady.treesitter.function_start")
+
+    local func_node, paramters = TS.get_func_node("javascript")
+    if func_node == nil then
+        vim.notify("Unable to perform ParameterLog", "error")
+        return
+    end
+
+    local clg = "console.log('-------------------');"
+
+    P(paramters)
+    for idx, param in ipairs(paramters) do
+        clg = clg .. "console.log(" .. param .. ");"
+    end
+
+    clg = clg .. "console.log('-------------------');"
+    return clg
 end
 
--- Parameter Log:
--- Use TS to get surrounding function and log a parameter
+-- Use TS to get surrounding function and log all parameters
 luasnip.add_snippets("javascript", {
-    snippet("plg", fNode(param_log))
-})
-
-local tester = function()
-    return "running"
-end
-
-luasnip.add_snippets("javascript", {
-    snippet("tester", fNode(tester))
+    snippet("pl", fNode(param_log))
 })
