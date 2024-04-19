@@ -9,6 +9,7 @@ vim.keymap.set('n', '<leader>o', 'o<escape>')
 vim.keymap.set('n', '<leader>O', 'O<escape>')
 
 vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight" })
+vim.keymap.set('n', '<leader>nm', '<cmd>%s/^M//g')
 
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "BufferNext" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { desc = "BufferPrev" })

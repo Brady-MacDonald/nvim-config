@@ -2,8 +2,7 @@ return {
     dir = "~/sbr/telescope-directus.nvim",
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
-        -- local telescope = require("telescope")
-        -- telescope.load_extension("directus")
+        require("telescope").load_extension("directus")
 
         local directus = require("directus")
         local sbr_config = require("sbr.config")

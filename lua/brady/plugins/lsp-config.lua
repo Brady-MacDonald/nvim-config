@@ -13,7 +13,8 @@ return {
     },
 
     -- Mason-LspConfig: bridge between mason.nvim <-> nvim-lspconfig
-    -- Allows to set default LSP's to always have intalled (config as code)
+    -- Allows to set default LSP's to always have installed (config as code)
+    -- Name of language server must be agreed upon mason and lspconfig
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
@@ -23,9 +24,11 @@ return {
         end
     },
 
+    -- Configure the lua_ls for vim api docs
     { "folke/neodev.nvim" },
 
-    -- Nvim-LspConfig: Used by the built in neovim LSP client for configuration
+    -- nvim-lspconfig: Used by builtin LSP client for server startup configuration
+    -- Has pre-made configurations needed to start most common language servers
     {
         "neovim/nvim-lspconfig",
         config = function()
@@ -34,11 +37,10 @@ return {
             local lspconfig = require("lspconfig")
             local util = require("lspconfig.util")
 
-            -- Can define custom 'handlers' when configuring each LSP
+            -- Can define custom 'handlers' when configuring each LS
             -- By specifying the LSP method, handler = {["textDocument/method"] = function() ... end}
-            -- This handler will be envoked once the LS sends its response
+            -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
-            -- We can then intercept, the response and provide additional config, then call the builtin NVIM handler
 
             lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
@@ -52,6 +54,7 @@ return {
 
             lspconfig.gopls.setup {
                 -- on_attach = lspconfig.on_attach,
+                -- add in the nvim-cmp completion ca[ability]
                 -- capabilities = lspconfig.capabilities,
                 cmd = { "gopls" },
                 filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -74,12 +77,10 @@ return {
                             vim.notify(vim.json.encode(err), "error", { title = "LSP hover Error" })
                         end
 
-                        vim.notify(vim.json.encode(result), "result", { title = "LSP hover" })
                         vim.lsp.handlers["textDocument/hover"](err, result, ctx, config)
                     end
                 }
             }
-
 
             -- Global Diagnostic Mappings
             vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
@@ -87,25 +88,34 @@ return {
             vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = "Diagnostic: Next" })
 
             vim.api.nvim_create_autocmd("LspAttach", {
-                desc = "Create kepmaps for LSP commands when Lsp attaches to buffer",
+                desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
                 group = vim.api.nvim_create_augroup("LspKeymaps", {}),
                 callback = function(event_data)
-                    vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover, {})
-                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, {})
-                    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, {})
-                    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, {})
-                    vim.keymap.set('n', '<leader>td', vim.lsp.buf.type_definition, {})
-                    vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format, {})
+                    vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
+                        { desc = "LSP: textDocument/hover", buffer = 0 })
+                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+                        { desc = "LSP: textDocument/codeactions", buffer = 0 })
+                    vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
+                        { desc = "LSP: textDocument/definition", buffer = 0 })
+                    vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition,
+                        { desc = "LSP: textDocument/typeDefinition", buffer = 0 })
+                    vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation,
+                        { desc = "LSP: textDocument/implementation", buffer = 0 })
+                    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename,
+                        { desc = "LSP: textDocument/rename", buffer = 0 })
+                    vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
+                        { desc = "LSP: textDocument/formatting", buffer = 0 })
 
                     -- Telescope LSP commands
-                    local telescope = require("telescope.builtin")
-
-                    vim.keymap.set('n', '<leader>fr', telescope.lsp_references,
-                        { desc = "Telescope: textDocument/references" })
-                    vim.keymap.set("n", "<leader>ds", telescope.lsp_document_symbols,
-                        { desc = "Telescope: textDocument/symbols" })
-                    vim.keymap.set("n", "<leader>ws", telescope.lsp_workspace_symbols,
-                        { desc = "Telescope: workSpace/symbols" })
+                    local telescope_builtin = require("telescope.builtin")
+                    vim.keymap.set('n', '<leader>fr', telescope_builtin.lsp_references,
+                        { desc = "Telescope: textDocument/references", buffer = 0 })
+                    vim.keymap.set('n', '<leader>td', telescope_builtin.diagnostics,
+                        { desc = "Telescope: textDocument/diagnostics", buffer = 0 })
+                    vim.keymap.set("n", "<leader>ds", telescope_builtin.lsp_document_symbols,
+                        { desc = "Telescope: textDocument/symbols", buffer = 0 })
+                    vim.keymap.set("n", "<leader>ws", telescope_builtin.lsp_workspace_symbols,
+                        { desc = "Telescope: workSpace/symbols", buffer = 0 })
 
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         desc = "textDocument/formatting Request on BufWritePre",
@@ -114,6 +124,7 @@ return {
                             local sbr_betpoints = string.find(ev.match, "/sbr/betpoints")
                             local sbr_directus = string.find(ev.match, "/sbr/directus")
                             local sbr_odds = string.find(ev.match, "/sbr/odds")
+
                             local not_sbr = sbr_betpoints == nil and sbr_directus == nil and sbr_odds == nil
 
                             local buf_clients = vim.lsp.get_clients({ bufnr = ev.buf })

@@ -25,8 +25,6 @@ return {
             }
         })
 
-        vim.keymap.set("n", "<leader><S-e>", "<cmd>Neotree filesystem toggle<CR>", { desc = "Neotree: RevealLeft" })
-        vim.keymap.set("n", "<leader>e", "<cmd>Neotree filesystem reveal left<CR>", {})
-        vim.keymap.set("n", "<leader>bf", "<cmd>Neotree buffers reveal float<CR>", {})
+        vim.keymap.set("n", "<leader>e", "<cmd>Neotree filesystem reveal left<CR>", { desc = "Neotree: RevealLeft" })
     end,
 }

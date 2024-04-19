@@ -8,14 +8,13 @@ return {
         config = function()
             local dap = require("dap")
 
-            vim.keymap.set("n", "<leader>c", dap.continue)
-            vim.keymap.set("n", "<leader>so", dap.step_over)
-            vim.keymap.set("n", "<leader>si", dap.step_into)
-            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+            vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap: Continue" })
+            vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
+            vim.keymap.set("n", "<leader>si", dap.step_into, { desc = "Dap: StepInto" })
+            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
             vim.keymap.set("n", "<leader>B", function()
-                -- Conditional breakpoint
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
-            end)
+            end, { desc = "Dap: ConditionBreakpoint" })
 
             for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
                 require("dap").configurations[language] = {
@@ -82,8 +81,7 @@ return {
             vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "DapUI: Debugger Close" })
             vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "DapUI: Debugger Toggle" })
             vim.keymap.set("n", "<leader>df", dapui.float_element, { desc = "DapUI: Float Element" })
-
-            vim.keymap.set("n", "<leader>dv", dapui.eval)
+            vim.keymap.set("n", "<leader>dv", dapui.eval, { desc = "DapUI: Eval" })
         end
     },
 

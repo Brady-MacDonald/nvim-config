@@ -7,15 +7,10 @@ return {
         tag = '0.1.5',
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
-            local telescope = require("telescope")
             local builtin = require("telescope.builtin")
             local themes = require("telescope.themes")
 
-            local ivy_theme = themes.get_ivy()
-
-            telescope.setup({
-                defaults = {}
-            })
+            require("telescope").setup({})
 
             vim.keymap.set("n", "z=", builtin.spell_suggest, { desc = "Telescope: SpellSuggest" })
             vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope: HelpTags" })
@@ -33,33 +28,28 @@ return {
             vim.keymap.set("n", "<leader>gt", builtin.git_stash, { desc = "Telescope: GitStash" })
 
             local config_opts = {
-                layout_strategy = "vertical",
-                layout_config = {
-                    horizontal = {
-                        prompt_position = "top"
-                    }
-                },
                 search_dirs = { "~/.config/nvim" },
                 prompt_prefix = "config -> ",
                 prompt_title = "Search Config"
             }
 
-            local grep_config = function() builtin.live_grep(config_opts) end
-            local find_config = function() builtin.find_files(config_opts) end
+            local grep_config = function() builtin.live_grep(themes.get_ivy(config_opts)) end
+            local find_config = function() builtin.find_files(themes.get_cursor(config_opts)) end
 
             local notes_opts = {
-                search_dirs = { "~/notes/vim" },
+                search_dirs = { "~/notes/nvim" },
                 prompt_prefix = "notes -> ",
                 prompt_title = "Search Notes",
                 prompt_position = "top"
             }
+
             local grep_notes = function() builtin.live_grep(notes_opts) end
             local find_notes = function() builtin.find_files(notes_opts) end
 
-            vim.keymap.set("n", "<leader>gc", grep_config, {})
-            vim.keymap.set("n", "<leader>fc", find_config, {})
-            vim.keymap.set("n", "<leader>gn", grep_notes, {})
-            vim.keymap.set("n", "<leader>fn", find_notes, {})
+            vim.keymap.set("n", "<leader>gc", grep_config, { desc = "Telescope: GrepConfig" })
+            vim.keymap.set("n", "<leader>fc", find_config, { desc = "Telescope: FindConfig" })
+            vim.keymap.set("n", "<leader>gn", grep_notes, { desc = "Telescope: GrepNotes" })
+            vim.keymap.set("n", "<leader>fn", find_notes, { desc = "Telescope: FindNotes" })
         end
     },
 

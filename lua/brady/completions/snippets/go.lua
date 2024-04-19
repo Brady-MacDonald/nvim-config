@@ -28,8 +28,8 @@ luasnip.add_snippets("go", {
 
 luasnip.add_snippets("go", {
     s("enn",
-        fmt('if err != nil {{\n {} err\n}}\n{}',
-            { iNode(1), iNode(2) }
+        fmt('if err != nil {{\n panic(err)\n}}\n{}',
+            { iNode(1) }
         ))
 })
 
