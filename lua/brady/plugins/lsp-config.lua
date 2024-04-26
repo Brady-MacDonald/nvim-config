@@ -136,5 +136,16 @@ return {
                 end
             })
         end
+    },
+    {
+        "jmederosalvarado/roslyn.nvim",
+        config = function()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            require("roslyn").setup({
+                capabilities = capabilities,
+                on_attach = function()
+                end,
+            })
+        end
     }
 }

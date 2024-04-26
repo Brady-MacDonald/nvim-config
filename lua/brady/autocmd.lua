@@ -17,16 +17,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         local params = vim.lsp.util.make_range_params()
         vim.lsp.buf_request(0, "textDocument/codeAction", params, function(err, res, ctx, config)
             if err ~= nil then return end
-            if res == nil then return end
+            if res == nil or #res == 0 then return end
 
-            local organize_imports = {}
+            local organize_imports = nil
             for _, code_action in pairs(res) do
                 if code_action.kind == "source.organizeImports" then
                     organize_imports = code_action
                 end
             end
 
-            if #organize_imports.edit.documentChanges == 0 then return end
+            if organize_imports == nil or #organize_imports.edit.documentChanges == 0 then return end
 
             vim.lsp.util.apply_text_edits(organize_imports.edit.documentChanges[1].edits, ev.buf, "utf-8")
         end)

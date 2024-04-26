@@ -4,7 +4,7 @@ return {
     config = function()
         require("nvim-autopairs").setup({
             fast_wrap = {
-                map = '<S-a>',
+                map = '<C-s>',
             },
         })
     end
