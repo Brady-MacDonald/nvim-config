@@ -3,8 +3,7 @@
 --------------------------
 
 return {
-    -- Mason: manages external Neovim dependencies
-    -- Downloads the LSP to local machine (using git or npm)
+    -- Mason: manages installing LSP
     {
         "williamboman/mason.nvim",
         config = function()
@@ -19,16 +18,15 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup {
-                ensure_installed = { "tsserver", "lua_ls", "jsonls", "gopls" },
+                ensure_installed = { "clangd", "lua_ls", "tsserver", "gopls", "jsonls" },
             }
         end
     },
 
-    -- Configure the lua_ls for vim api docs
+    -- Configure the lua_ls for the vim api
     { "folke/neodev.nvim" },
 
-    -- nvim-lspconfig: Used by builtin LSP client for server startup configuration
-    -- Has pre-made configurations needed to start most common language servers
+    -- nvim-lspconfig: Used by lsp startup config
     {
         "neovim/nvim-lspconfig",
         config = function()
@@ -42,6 +40,18 @@ return {
             -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
 
+            lspconfig.arduino_language_server.setup {
+                cmd = {
+                    "arduino-language-server",
+                    "-log", "true",
+                    "-cli", "/home/bmacdonald/bin/arduino-cli",
+                    "-cli-config", "/home/bmacdonald/.arduino15/arduino-cli.yaml",
+                    "-fqbn", "arduino:avr:nano"
+                }
+            }
+
+            lspconfig.dockerls.setup({})
+            lspconfig.clangd.setup({})
             lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
             lspconfig.lua_ls.setup({})
@@ -83,9 +93,9 @@ return {
             }
 
             -- Global Diagnostic Mappings
-            vim.keymap.set('n', '<leader>do', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
-            vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { desc = "Diagnostic: Previous" })
-            vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { desc = "Diagnostic: Next" })
+            vim.keymap.set('n', '[o', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
+            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Diagnostic: Previous" })
+            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Diagnostic: Next" })
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
@@ -121,11 +131,20 @@ return {
                         desc = "textDocument/formatting Request on BufWritePre",
                         group = vim.api.nvim_create_augroup("LspFormatPreWrite", {}),
                         callback = function(ev)
+                            local sbr_core = string.find(ev.match, "/sbr/sportsbookreview_core_")
                             local sbr_betpoints = string.find(ev.match, "/sbr/betpoints")
                             local sbr_directus = string.find(ev.match, "/sbr/directus")
                             local sbr_odds = string.find(ev.match, "/sbr/odds")
+                            local adcom = string.find(ev.match, "/nssmp/adcom")
+                            local whitelabel = string.find(ev.match, "/nssmp/whitelabel")
 
-                            local not_sbr = sbr_betpoints == nil and sbr_directus == nil and sbr_odds == nil
+                            local not_sbr =
+                                sbr_core == nil and
+                                sbr_betpoints == nil and
+                                sbr_directus == nil and
+                                sbr_odds == nil and
+                                adcom == nil and
+                                whitelabel == nil
 
                             local buf_clients = vim.lsp.get_clients({ bufnr = ev.buf })
                             if not_sbr and #buf_clients ~= 0 and buf_clients[1].server_capabilities.documentFormattingProvider then
@@ -143,8 +162,7 @@ return {
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             require("roslyn").setup({
                 capabilities = capabilities,
-                on_attach = function()
-                end,
+                on_attach = function() end,
             })
         end
     }

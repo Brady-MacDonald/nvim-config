@@ -7,6 +7,7 @@ return {
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require("dap")
+            local dap_utils = require("dap.utils")
 
             vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap: Continue" })
             vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
@@ -15,33 +16,6 @@ return {
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
             end, { desc = "Dap: ConditionBreakpoint" })
-
-            for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
-                require("dap").configurations[language] = {
-                    {
-                        type = "pwa-node",
-                        request = "launch",
-                        name = "Launch file",
-                        program = "${file}",
-                        cwd = "${workspaceFolder}",
-                    },
-                    {
-                        name = "Attach to process",
-                        type = "pwa-node",
-                        request = "attach",
-                        processId = require('dap.utils').pick_process,
-                        cwd = "${workspaceFolder}",
-                    },
-                    {
-                        type = "pwa-chrome",
-                        request = "launch",
-                        name = "Start Chrome with \"localhost\"",
-                        url = "http://localhost:3000",
-                        webRoot = "${workspaceFolder}",
-                        userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
-                    }
-                }
-            end
         end
     },
     {
@@ -85,32 +59,52 @@ return {
         end
     },
 
-    --------------------------
+    -------------------------------
     -- Language Specific Debuggers
-    -----------------------------
-
-    -- Go Delve debugger installed with Mason
+    -------------------------------
     {
         "leoluz/nvim-dap-go",
         config = function()
+            -- Sets up nvim-dap configuration for Delve
             require("dap-go").setup()
-
-            -- local dap_go = require("dap-go")
-            -- dap_go.debug_test()
         end
     },
-
-    -- javascript/typescript
     {
-        -- JS debug adapter
         "mxsdev/nvim-dap-vscode-js",
         dependencies = {
-            -- The JS debugger
-            "microsoft/vscode-js-debug", -- Installed through Mason
+            "microsoft/vscode-js-debug", -- JS debugger installed through Mason
             build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
         },
         config = function()
+            local dap = require("dap")
             local dap_node = require("dap-vscode-js")
+
+            for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
+                dap.configurations[language] = {
+                    {
+                        type = "pwa-node",
+                        request = "launch",
+                        name = "Launch file",
+                        program = "${file}",
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        name = "Attach to process",
+                        type = "pwa-node",
+                        request = "attach",
+                        processId = require('dap.utils').pick_process,
+                        cwd = "${workspaceFolder}",
+                    },
+                    {
+                        type = "pwa-chrome",
+                        request = "launch",
+                        name = "Start Chrome with \"localhost\"",
+                        url = "http://localhost:3000",
+                        webRoot = "${workspaceFolder}",
+                        userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+                    }
+                }
+            end
 
             dap_node.setup({
                 debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",

@@ -35,11 +35,11 @@ vim.keymap.set('n', '<leader>grf', function()
     local file = vim.fn.expand("%")
     io.popen("git restore " .. file)
 end
-, { desc = "git restore file" })
+, { desc = "Git: Restore %" })
 
 vim.keymap.set('n', '<leader>gr', function()
-    io.popen("git restore .")
-end, { desc = "git restore ." })
+    vim.system({ "git", "restore", "." })
+end, { desc = "Git: Restore ." })
 
 vim.keymap.set("n", "<leader><leader>sbr", function()
     require("sbr").setup()

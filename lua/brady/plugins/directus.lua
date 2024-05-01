@@ -1,5 +1,5 @@
 return {
-    dir = "~/sbr/telescope-directus.nvim",
+    dir = "~/nssmp/telescope-directus.nvim",
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
         require("telescope").load_extension("directus")

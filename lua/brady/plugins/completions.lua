@@ -1,7 +1,6 @@
 return {
-    { "hrsh7th/cmp-nvim-lua" }, -- Special NVIM knowledge about the vim global
-    { "hrsh7th/cmp-buffer" },   -- Special NVIM knowledge about the vim global
-    { "hrsh7th/cmp-nvim-lsp" }, -- Auto iimports
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-nvim-lsp" }, -- Auto imports
     { "onsails/lspkind-nvim" },
 
     -- used as a source to be used by nvim-cmp
@@ -67,7 +66,6 @@ return {
 
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
-                    { name = "nvim_lua" },
                     { name = "luasnip" },
                     { name = "buffer" },
                 }, {
@@ -80,7 +78,6 @@ return {
                         with_text = true,
                         menu = {
                             nvim_lsp = "[LSP]",
-                            nvim_lua = "[NVIM]",
                             luasnip = "[SNIP]",
                             buffer = "[BUF]",
                             gh_issues = "[GH_ISS]"
