@@ -40,23 +40,22 @@ return {
             -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
 
-            lspconfig.arduino_language_server.setup {
-                cmd = {
-                    "arduino-language-server",
-                    "-log", "true",
-                    "-cli", "/home/bmacdonald/bin/arduino-cli",
-                    "-cli-config", "/home/bmacdonald/.arduino15/arduino-cli.yaml",
-                    "-fqbn", "arduino:avr:nano"
-                }
-            }
+            -- require("lspconfig").arduino_language_server.setup {
+            --     cmd = {
+            --         "arduino-language-server",
+            --         "-cli", "/home/bmacdonald/go/bin/arduino-cli",
+            --         "-cli-config", "/home/bmacdonald/.arduino15/arduino-cli.yaml",
+            --         "-fqbn", "arduino:avr:nano"
+            --     }
+            -- }
 
-            lspconfig.dockerls.setup({})
             lspconfig.clangd.setup({})
+            lspconfig.lua_ls.setup({})
             lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
-            lspconfig.lua_ls.setup({})
             lspconfig.pylsp.setup({})
             lspconfig.volar.setup({})
+            lspconfig.dockerls.setup({})
             lspconfig.cssls.setup({})
             lspconfig.html.setup({
                 filetypes = { "html", "template" }
@@ -78,18 +77,6 @@ return {
                         },
                     },
                 },
-            }
-
-            lspconfig.lua_ls.setup {
-                handlers = {
-                    ["textDocument/hover"] = function(err, result, ctx, config)
-                        if err ~= nil then
-                            vim.notify(vim.json.encode(err), "error", { title = "LSP hover Error" })
-                        end
-
-                        vim.lsp.handlers["textDocument/hover"](err, result, ctx, config)
-                    end
-                }
             }
 
             -- Global Diagnostic Mappings
@@ -132,6 +119,7 @@ return {
                         group = vim.api.nvim_create_augroup("LspFormatPreWrite", {}),
                         callback = function(ev)
                             local sbr_core = string.find(ev.match, "/sbr/sportsbookreview_core_")
+                            local sbr = string.find(ev.match, "/sbr/core_sbr")
                             local sbr_betpoints = string.find(ev.match, "/sbr/betpoints")
                             local sbr_directus = string.find(ev.match, "/sbr/directus")
                             local sbr_odds = string.find(ev.match, "/sbr/odds")
@@ -140,6 +128,7 @@ return {
 
                             local not_sbr =
                                 sbr_core == nil and
+                                sbr == nil and
                                 sbr_betpoints == nil and
                                 sbr_directus == nil and
                                 sbr_odds == nil and

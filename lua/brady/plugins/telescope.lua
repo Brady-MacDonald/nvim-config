@@ -27,6 +27,8 @@ return {
             vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Telescope: GitFiles" })
             vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Telescope: GitBranches" })
             vim.keymap.set("n", "<leader>gt", builtin.git_stash, { desc = "Telescope: GitStash" })
+            vim.keymap.set("n", "<leader>gbc", builtin.git_bcommits, { desc = "Telescope: GitBufferCommits" })
+            vim.keymap.set("n", "<leader>gcc", builtin.git_bcommits, { desc = "Telescope: GitCommits" })
 
             local config_opts = {
                 search_dirs = { "~/.config/nvim" },

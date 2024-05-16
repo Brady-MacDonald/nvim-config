@@ -1,6 +1,7 @@
-vim.keymap.set('i', '<leader>jk', '<escape>')
-vim.keymap.set('v', '<leader>jk', '<escape>')
+vim.keymap.set({ "i", "n" }, "<leader>jk", "<escape>")
 vim.keymap.set("t", "<leader>jk", "<C-\\><C-n>")
+
+vim.keymap.set("t", "<C-w>c", "<C-\\><C-n><C-w>c<C-w>l")
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
@@ -48,3 +49,8 @@ end, { desc = "Set up SBR config" })
 vim.keymap.set("n", "<leader><leader>mo", function()
     require("brady.monk").setup()
 end, { desc = "Set up Monk LSP" })
+
+vim.keymap.set("n", "<leader>dd", function()
+    local diag = vim.diagnostic.is_enabled()
+    vim.diagnostic.enable(not diag)
+end, { desc = "Toggle Diagnostics" })

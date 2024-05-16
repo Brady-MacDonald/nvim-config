@@ -65,8 +65,8 @@ return {
                 -- }),
 
                 sources = cmp.config.sources({
-                    { name = "nvim_lsp" },
                     { name = "luasnip" },
+                    { name = "nvim_lsp" },
                     { name = "buffer" },
                 }, {
                     { name = "gh_issues" },
@@ -77,8 +77,8 @@ return {
                     format = lspkind.cmp_format {
                         with_text = true,
                         menu = {
-                            nvim_lsp = "[LSP]",
                             luasnip = "[SNIP]",
+                            nvim_lsp = "[LSP]",
                             buffer = "[BUF]",
                             gh_issues = "[GH_ISS]"
                         },

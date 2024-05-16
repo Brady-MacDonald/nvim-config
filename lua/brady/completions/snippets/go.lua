@@ -12,7 +12,7 @@ local tNode = luasnip.text_node
 local iNode = luasnip.insert_node
 
 luasnip.add_snippets("go", {
-    snippet("cl", {
+    snippet("fpl", {
         tNode("fmt.Println("),
         iNode(1),
         tNode(")")
@@ -20,7 +20,15 @@ luasnip.add_snippets("go", {
 })
 
 luasnip.add_snippets("go", {
-    s("wcl",
+    snippet("fps", {
+        tNode("fmt.Println(\""),
+        iNode(1),
+        tNode("\")")
+    })
+})
+
+luasnip.add_snippets("go", {
+    s("fpw",
         fmt('fmt.Println("----------------");\nfmt.Println({});\nfmt.Println("----------------");\n',
             { iNode(1) }
         ))

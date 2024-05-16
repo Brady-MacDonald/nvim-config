@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-    desc = "LSP code_actions request to auto format imports on save",
+    desc = "LSP code_actions request to auto formas go imports on save",
     group = vim.api.nvim_create_augroup("FormatGoImports", {}),
     pattern = "*.go",
     callback = function(ev)

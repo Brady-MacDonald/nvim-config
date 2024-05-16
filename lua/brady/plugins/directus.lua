@@ -7,6 +7,6 @@ return {
         local directus = require("directus")
         local sbr_config = require("sbr.config")
 
-        directus.setup(sbr_config.directus_uat)
+        directus.setup(sbr_config.directus_local)
     end
 }
