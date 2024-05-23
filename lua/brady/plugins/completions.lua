@@ -1,7 +1,8 @@
 return {
     { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-nvim-lsp" }, -- Auto imports
-    { "onsails/lspkind-nvim" },
+    { "onsails/lspkind-nvim" }, -- Icons for completions
 
     -- used as a source to be used by nvim-cmp
     -- Can create our own snippets for this plugin to be used
@@ -9,17 +10,15 @@ return {
         "L3MON4D3/LuaSnip",
         dependencies = {
             "saadparwaiz1/cmp_luasnip",
-            "rafamadriz/friendly-snippets",
         },
         config = function()
-            require("luasnip.loaders.from_vscode").lazy_load() -- friendly-snippets loader
             local ls = require("luasnip")
 
             vim.keymap.set('i', '<C-k>', function()
                 if ls.expand_or_jumpable() then
                     ls.expand_or_jump()
                 end
-            end, {})
+            end, { desc = "Exapnd snippet" })
 
             vim.keymap.set('i', '<C-j>', function()
                 if ls.jumpable(-1) then
@@ -39,38 +38,37 @@ return {
             local cmp = require("cmp")
             local lspkind = require("lspkind")
 
+            lspkind.init()
+
+            vim.opt.completeopt = { "menu", "menuone", "noselect" }
+            vim.opt.shortmess:append "c"
+
             cmp.setup({
-                -- Snippet plugin for the snippet engineto??
+                sources = {
+                    { name = "luasnip" },
+                    { name = "nvim_lsp" },
+                    { name = "buffer" },
+                },
+
+                -- Setting up mapping
+                mapping = {
+                    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+                    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+                    ["<C-l>"] = cmp.mapping(
+                        cmp.mapping.confirm {
+                            behavior = cmp.ConfirmBehavior.Insert,
+                            select = true,
+                        },
+                        { "i", "c" }
+                    ),
+                },
+
+                -- luasnip to handle snippet expansion
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
                     end,
                 },
-
-                -- Setting up mapping
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Apply the sugested completion
-                }),
-
-                -- Set completion sources for nvim-cmp
-                -- Order of sources sets the priority
-                -- sources = cmp.config.sources({
-                --     { name = "luasnip" },
-                --     { name = "nvim_lua", max_item_count = 5 },
-                --     { name = "nvim_lsp", max_item_count = 5 },
-                -- }),
-
-                sources = cmp.config.sources({
-                    { name = "luasnip" },
-                    { name = "nvim_lsp" },
-                    { name = "buffer" },
-                }, {
-                    { name = "gh_issues" },
-                }),
 
                 -- Format sources
                 formatting = {
@@ -80,6 +78,7 @@ return {
                             luasnip = "[SNIP]",
                             nvim_lsp = "[LSP]",
                             buffer = "[BUF]",
+                            path = "[PATH]",
                             gh_issues = "[GH_ISS]"
                         },
                     },

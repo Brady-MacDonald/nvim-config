@@ -5,7 +5,6 @@ local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 
 local snippet = luasnip.snippet
-local s = luasnip.s
 
 local fNode = luasnip.function_node
 local tNode = luasnip.text_node
@@ -27,17 +26,29 @@ luasnip.add_snippets("go", {
     })
 })
 
+local json_struct_tag = function()
+    local TS = require("brady.treesitter.json_struct_tag")
+    local name = TS.some_func()
+    vim.notify(name)
+
+    return name
+end
+
 luasnip.add_snippets("go", {
-    s("fpw",
-        fmt('fmt.Println("----------------");\nfmt.Println({});\nfmt.Println("----------------");\n',
-            { iNode(1) }
+    snippet("js", fmt('`json:"{}"`{}', { fNode(json_struct_tag), iNode(2) }))
+})
+
+luasnip.add_snippets("go", {
+    snippet("fpw",
+        fmt('fmt.Println("----------------");\nfmt.Println({});\nfmt.Println("----------------");\n{}',
+            { iNode(1), iNode(2) }
         ))
 })
 
 luasnip.add_snippets("go", {
-    s("enn",
-        fmt('if err != nil {{\n panic(err)\n}}\n{}',
-            { iNode(1) }
+    snippet("enn",
+        fmt('if err != nil {{\n   {}(err)\n}}\n{}',
+            { iNode(1), iNode(2) }
         ))
 })
 

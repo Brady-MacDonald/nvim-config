@@ -22,6 +22,7 @@ local TREE_SITTER = {
 ---@return string[]  params Function input parameters
 TS.get_func_node = function(file_type)
     local curr_node = vim.treesitter.get_node()
+    assert(curr_node ~= nil, "No treesitter node available")
 
     local ts_query = TREE_SITTER[file_type]
     if ts_query == nil then
@@ -31,6 +32,7 @@ TS.get_func_node = function(file_type)
     while curr_node:parent() ~= nil do
         if (curr_node:type() == ts_query.FUNC) then break end
         curr_node = curr_node:parent()
+        assert(curr_node ~= nil, "No treesitter")
     end
 
     local query = vim.treesitter.query.parse(file_type, ts_query.QUERY)

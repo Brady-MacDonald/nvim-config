@@ -32,6 +32,13 @@ vim.keymap.set("n", "<leader><leader>d", function()
 end)
 
 
+vim.keymap.set("n", "<leader>sc", "<cmd>lua require('brady.scratch')<CR>", { desc = "Load scrath work" })
+-- These mappings control the size of splits (height/width)
+vim.keymap.set("n", "<M-,>", "<c-w>5<")
+vim.keymap.set("n", "<M-.>", "<c-w>5>")
+vim.keymap.set("n", "<M-t>", "<C-W>+")
+vim.keymap.set("n", "<M-s>", "<C-W>-")
+
 vim.keymap.set('n', '<leader>grf', function()
     local file = vim.fn.expand("%")
     io.popen("git restore " .. file)

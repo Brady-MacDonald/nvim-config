@@ -12,10 +12,11 @@ return {
             vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap: Continue" })
             vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
             vim.keymap.set("n", "<leader>si", dap.step_into, { desc = "Dap: StepInto" })
+            vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Dap: Restart" })
             vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
-            end, { desc = "Dap: ConditionBreakpoint" })
+            end, { desc = "Dap: ConditionalBreakpoint" })
         end
     },
     {
@@ -72,7 +73,7 @@ return {
     {
         "mxsdev/nvim-dap-vscode-js",
         dependencies = {
-            "microsoft/vscode-js-debug", -- JS debugger installed through Mason
+            "microsoft/vscode-js-debug", -- JS debugger to be installed through Mason
             build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
         },
         config = function()
