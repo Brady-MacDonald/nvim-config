@@ -10,10 +10,12 @@ return {
             local dap_utils = require("dap.utils")
 
             vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap: Continue" })
+            vim.keymap.set("n", "<leader>cc", dap.run_to_cursor, { desc = "Dap: RunToCursor" })
             vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
             vim.keymap.set("n", "<leader>si", dap.step_into, { desc = "Dap: StepInto" })
             vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Dap: Restart" })
             vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
+            vim.keymap.set("n", "<leader>cb", dap.clear_breakpoints, { desc = "Dap: ClearBreakpoint" })
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
             end, { desc = "Dap: ConditionalBreakpoint" })
@@ -26,6 +28,7 @@ return {
             local dapui = require("dapui")
 
             dapui.setup({
+                ---@diagnostic disable-next-line: missing-fields
                 force_buffers = true,
                 layouts = {
                     {

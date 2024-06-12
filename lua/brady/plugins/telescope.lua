@@ -14,6 +14,7 @@ return {
             vim.keymap.set("n", "z=", builtin.spell_suggest, { desc = "Telescope: SpellSuggest" })
             vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope: HelpTags" })
             vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope: Keymaps" })
+            vim.keymap.set("n", "<leader>tl", builtin.builtin, { desc = "Telescope: Builtin" })
 
             vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope: FindFiles" })
             vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope: FindBuffers" })
@@ -36,7 +37,7 @@ return {
             }
 
             local grep_config = function() builtin.live_grep(themes.get_ivy(config_opts)) end
-            local find_config = function() builtin.find_files(themes.get_cursor(config_opts)) end
+            local find_config = function() builtin.find_files(themes.get_ivy(config_opts)) end
 
             local notes_opts = {
                 search_dirs = { "~/notes/nvim" },
@@ -46,7 +47,7 @@ return {
             }
 
             local grep_notes = function() builtin.live_grep(notes_opts) end
-            local find_notes = function() builtin.find_files(notes_opts) end
+            local find_notes = function() builtin.find_files(themes.get_cursor(notes_opts)) end
 
             vim.keymap.set("n", "<leader>gc", grep_config, { desc = "Telescope: GrepConfig" })
             vim.keymap.set("n", "<leader>fc", find_config, { desc = "Telescope: FindConfig" })

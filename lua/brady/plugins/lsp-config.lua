@@ -79,17 +79,22 @@ return {
                 },
             }
 
-            -- Global Diagnostic Mappings
-            vim.keymap.set('n', '[o', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
-            vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Diagnostic: Previous" })
-            vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Diagnostic: Next" })
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
                 group = vim.api.nvim_create_augroup("LspKeymaps", {}),
                 callback = function(event_data)
+                    -- Defaults in nvim 0.11
+                    vim.keymap.set('n', 'grn', vim.lsp.buf.rename,
+                        { desc = "LSP: textDocument/rename", buffer = 0 })
+                    vim.keymap.set('n', 'grr', vim.lsp.buf.references,
+                        { desc = "LSP: textDocument/rename", buffer = 0 })
+
+                    -- Where to add signatureHelp??
                     vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
                         { desc = "LSP: textDocument/hover", buffer = 0 })
+                    vim.keymap.set('i', '<C-h>', vim.lsp.buf.code_action,
+                        { desc = "LSP: textDocument/codeactions", buffer = 0 })
                     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
                         { desc = "LSP: textDocument/codeactions", buffer = 0 })
                     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
@@ -98,8 +103,6 @@ return {
                         { desc = "LSP: textDocument/typeDefinition", buffer = 0 })
                     vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation,
                         { desc = "LSP: textDocument/implementation", buffer = 0 })
-                    vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename,
-                        { desc = "LSP: textDocument/rename", buffer = 0 })
                     vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
                         { desc = "LSP: textDocument/formatting", buffer = 0 })
 
@@ -118,22 +121,9 @@ return {
                         desc = "textDocument/formatting Request on BufWritePre",
                         group = vim.api.nvim_create_augroup("LspFormatPreWrite", {}),
                         callback = function(ev)
-                            local sbr_core = string.find(ev.match, "/sbr/sportsbookreview_core_")
-                            local sbr = string.find(ev.match, "/sbr/core_sbr")
-                            local sbr_betpoints = string.find(ev.match, "/sbr/betpoints")
-                            local sbr_directus = string.find(ev.match, "/sbr/directus")
-                            local sbr_odds = string.find(ev.match, "/sbr/odds")
-                            local adcom = string.find(ev.match, "/nssmp/adcom")
-                            local whitelabel = string.find(ev.match, "/nssmp/whitelabel")
-
-                            local not_sbr =
-                                sbr_core == nil and
-                                sbr == nil and
-                                sbr_betpoints == nil and
-                                sbr_directus == nil and
-                                sbr_odds == nil and
-                                adcom == nil and
-                                whitelabel == nil
+                            local sbr = string.find(ev.match, "/sportsbookreview/")
+                            local nssmp = string.find(ev.match, "/nssmp/")
+                            local not_sbr = sbr == nil and nssmp == nil
 
                             local buf_clients = vim.lsp.get_clients({ bufnr = ev.buf })
                             if not_sbr and #buf_clients ~= 0 and buf_clients[1].server_capabilities.documentFormattingProvider then

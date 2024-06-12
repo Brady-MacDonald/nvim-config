@@ -54,7 +54,7 @@ return {
                 mapping = {
                     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
                     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-                    ["<C-l>"] = cmp.mapping(
+                    ["<C-k>"] = cmp.mapping(
                         cmp.mapping.confirm {
                             behavior = cmp.ConfirmBehavior.Insert,
                             select = true,
@@ -72,6 +72,7 @@ return {
 
                 -- Format sources
                 formatting = {
+                    ---@diagnostic disable-next-line: missing-fields
                     format = lspkind.cmp_format {
                         with_text = true,
                         menu = {
