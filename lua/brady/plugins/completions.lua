@@ -18,7 +18,7 @@ return {
                 if ls.expand_or_jumpable() then
                     ls.expand_or_jump()
                 end
-            end, { desc = "Exapnd snippet" })
+            end, { desc = "Expand snippet" })
 
             vim.keymap.set('i', '<C-j>', function()
                 if ls.jumpable(-1) then

@@ -10,6 +10,7 @@ local fNode = luasnip.function_node
 local tNode = luasnip.text_node
 local iNode = luasnip.insert_node
 
+-- Format Print Value
 luasnip.add_snippets("go", {
     snippet("fpl", {
         tNode("fmt.Println("),
@@ -18,6 +19,7 @@ luasnip.add_snippets("go", {
     })
 })
 
+-- Format Print String
 luasnip.add_snippets("go", {
     snippet("fps", {
         tNode("fmt.Println(\""),
@@ -26,9 +28,27 @@ luasnip.add_snippets("go", {
     })
 })
 
+-- Format Print Wrapped
+luasnip.add_snippets("go", {
+    snippet("fpw",
+        fmt('fmt.Println("----------------")\nfmt.Println({})\nfmt.Println("----------------")\n{}',
+            { iNode(1), iNode(2) }
+        ))
+})
+
+-- Err Not Nil
+luasnip.add_snippets("go", {
+    snippet("enn",
+        fmt('if err != nil {{\n  {}(err)\n}}\n{}',
+            { iNode(1), iNode(2) }
+        ))
+})
+
+-- Format the json struct tag for property
 local json_struct_tag = function()
     local TS = require("brady.treesitter.json_struct_tag")
-    local name = TS.some_func()
+
+    local name = TS.json_struct_tag()
     vim.notify(name)
 
     return name
@@ -38,40 +58,26 @@ luasnip.add_snippets("go", {
     snippet("js", fmt('`json:"{}"`{}', { fNode(json_struct_tag), iNode(2) }))
 })
 
-luasnip.add_snippets("go", {
-    snippet("fpw",
-        fmt('fmt.Println("----------------");\nfmt.Println({});\nfmt.Println("----------------");\n{}',
-            { iNode(1), iNode(2) }
-        ))
-})
-
-luasnip.add_snippets("go", {
-    snippet("enn",
-        fmt('if err != nil {{\n   {}(err)\n}}\n{}',
-            { iNode(1), iNode(2) }
-        ))
-})
-
+-- Log out function parameters
 local param_log = function()
     local TS = require("brady.treesitter.function_start")
 
     local func_node, paramters = TS.get_func_node("go")
-    if func_node == nil then
-        vim.notify("Unable to perform ParameterLog", "error")
-        return
-    end
+    assert(func_node ~= nil, "Unable to get TSNode for go function")
 
-    local clg = "fmt.Println(\"---------------\"); "
+    local clg = ""
 
-    for idx, param in ipairs(paramters) do
+    for _, param in ipairs(paramters) do
         clg = clg .. "fmt.Println(" .. param .. "); "
     end
 
-    clg = clg .. "fmt.Println(\"---------------\");"
     return clg
 end
 
--- Use TS to get surrounding function and log all parameters
+-- Format Print Parameters
 luasnip.add_snippets("go", {
-    snippet("pl", fNode(param_log))
+    snippet("fpp",
+        fmt('fmt.Println("----------------")\n{}\nfmt.Println("----------------")\n{}',
+            { fNode(param_log), iNode(1) }
+        ))
 })

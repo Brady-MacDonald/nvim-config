@@ -19,25 +19,24 @@ local fNode = luasnip.function_node
 local param_log = function()
     local TS = require("brady.treesitter.function_start")
 
-    local func_node, paramters = TS.get_func_node("typescript")
+    local func_node, paramters = TS.get_func_node(vim.bo.filetype)
     if func_node == nil then
         vim.notify("Unable to perform ParameterLog", "error")
         return
     end
 
-    local clg = "console.log('-------------------');"
-
+    local clg = ""
     for idx, param in ipairs(paramters) do
-        clg = clg .. "console.log(" .. param .. ");"
+        clg = clg .. "console.log(" .. param .. "); "
     end
 
-    clg = clg .. "console.log('-------------------');"
     return clg
 end
 
 local langs = { "typescript", "javascript", "typescriptreact", "javascriptscriptreact", "vue" }
 
 for _, lang in ipairs(langs) do
+    -- Console Log
     luasnip.add_snippets(lang, {
         snippet("clg", {
             tNode('console.log('),
@@ -46,6 +45,7 @@ for _, lang in ipairs(langs) do
         })
     })
 
+    -- String Log
     luasnip.add_snippets(lang, {
         snippet("slg", {
             tNode('console.log("'),
@@ -54,6 +54,7 @@ for _, lang in ipairs(langs) do
         })
     })
 
+    -- Wrapped Log
     luasnip.add_snippets(lang, {
         s("wlg",
             fmt("console.log('----------------');\nconsole.log({});\nconsole.log('----------------');\n",
@@ -61,7 +62,11 @@ for _, lang in ipairs(langs) do
             ))
     })
 
+    -- Parameter Log
     luasnip.add_snippets(lang, {
-        snippet("plg", fNode(param_log))
+        snippet("plg",
+            fmt('console.log("----------------");\n{}\nconsole.log("----------------");\n{}',
+                { fNode(param_log), iNode(1) }
+            ))
     })
 end
