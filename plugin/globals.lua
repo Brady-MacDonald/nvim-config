@@ -24,7 +24,7 @@ vim.filetype.add({
         ["env"] = "sh",
     },
 
-    -- Detect and apply filetypes based on certain patterns of the filenames
+    -- Apply file type based on patterns of in filename
     pattern = {
         -- Match filenames like - ".env.staging", ".env.local" ...
         ["%.env%.[%w_.-]+"] = "sh",

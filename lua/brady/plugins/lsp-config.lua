@@ -114,6 +114,8 @@ return {
                         { desc = "Telescope: textDocument/diagnostics", buffer = 0 })
                     vim.keymap.set("n", "<leader>ds", telescope_builtin.lsp_document_symbols,
                         { desc = "Telescope: textDocument/symbols", buffer = 0 })
+                    vim.keymap.set("n", "<leader>ps", telescope_builtin.lsp_dynamic_workspace_symbols,
+                        { desc = "Telescope: workSpace/symbols", buffer = 0 })
                     vim.keymap.set("n", "<leader>ws", telescope_builtin.lsp_workspace_symbols,
                         { desc = "Telescope: workSpace/symbols", buffer = 0 })
 

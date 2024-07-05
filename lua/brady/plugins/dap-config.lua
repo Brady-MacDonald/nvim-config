@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 --------------------------
 -- DAP Config
 --------------------------
@@ -7,18 +9,29 @@ return {
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require("dap")
-            local dap_utils = require("dap.utils")
+            -- local dap_utils = require("dap.utils")
+            local dap_widgets = require("dap.ui.widgets")
 
-            vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap: Continue" })
-            vim.keymap.set("n", "<leader>cc", dap.run_to_cursor, { desc = "Dap: RunToCursor" })
+            vim.keymap.set("n", "<leader>cc", dap.continue, { desc = "Dap: Continue" })
+            vim.keymap.set("n", "<leader>cx", dap.run_to_cursor, { desc = "Dap: RunToCursor" })
             vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
             vim.keymap.set("n", "<leader>si", dap.step_into, { desc = "Dap: StepInto" })
+            vim.keymap.set("n", "<leader>su", dap.step_out, { desc = "Dap: StepOut" })
             vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Dap: Restart" })
-            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
             vim.keymap.set("n", "<leader>cb", dap.clear_breakpoints, { desc = "Dap: ClearBreakpoint" })
+            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
+
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
             end, { desc = "Dap: ConditionalBreakpoint" })
+
+            vim.keymap.set('n', '<leader>df', function()
+                dap_widgets.centered_float(dap_widgets.frames)
+            end)
+
+            vim.keymap.set('n', '<leader>ds', function()
+                dap_widgets.centered_float(dap_widgets.scopes)
+            end)
         end
     },
     {
@@ -28,7 +41,6 @@ return {
             local dapui = require("dapui")
 
             dapui.setup({
-                ---@diagnostic disable-next-line: missing-fields
                 force_buffers = true,
                 layouts = {
                     {

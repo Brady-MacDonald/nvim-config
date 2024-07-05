@@ -11,6 +11,7 @@ local TREE_SITTER = {
         FUNC = { "function_declaration", "arrow_function" }
     },
     go = {
+        -- Named identifiers
         QUERY = "(function_declaration (parameter_list (parameter_declaration (identifier) @iden)) @formal) @func",
         FUNC = { "function_declaration", "method_declaration" },
     },
