@@ -20,6 +20,7 @@ vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "Buffer
 vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>', { desc = "QuickfixList :cnext" })
 vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>', { desc = "QuickfixList :cprev" })
 vim.keymap.set('n', '<C-c>', '<cmd>cclose<CR>', { desc = "QuickfixList :cclose" })
+vim.keymap.set('n', '<leader><c-o>', '<cmd>copen<cr>', { desc = "quickfixlist :copen" })
 
 -- Control the size of splits (height/width)
 vim.keymap.set("n", "<M-,>", "<c-w>5<")

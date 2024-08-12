@@ -82,14 +82,18 @@ return {
         "leoluz/nvim-dap-go",
         config = function()
             -- Sets up nvim-dap configuration for Delve
-            require("dap-go").setup()
+            local dap_go = require("dap-go")
+            dap_go.setup()
+
+            vim.keymap.set("n", "<leader>dgt", dap_go.debug_test, { desc = "DapGo: DebugGoTest" })
+            vim.keymap.set("n", "<leader>dgl", dap_go.debug_last_test, { desc = "DapGo: DebugGoLast" })
         end
     },
     {
         "mxsdev/nvim-dap-vscode-js",
         dependencies = {
             "microsoft/vscode-js-debug", -- JS debugger to be installed through Mason
-            build = "npm i && npm run compile vsDebugServerBundle && mv dist out",
+            build = "npm i && npm run compile vsDebugServerBundle && rm -rf out && mv dist out",
         },
         config = function()
             local dap = require("dap")
