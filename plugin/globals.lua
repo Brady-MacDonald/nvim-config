@@ -1,5 +1,6 @@
 -- Global Functions
 
+-- print a lua table
 P = function(t)
     print(vim.inspect(t))
     return t
@@ -10,23 +11,29 @@ MP = function(t)
     return t
 end
 
+NP = function(t)
+    vim.notify(vim.inspect(t))
+    return t
+end
+
 vim.filetype.add({
-    -- Detect and assign filetype based on the extension of the filename
+    -- Assign filetype based on the extension
     extension = {
         mdx = "mdx",
         log = "log",
         conf = "conf",
+        monk = "monk",
     },
 
-    -- Detect and apply filetypes based on the entire filename
+    -- Apply filetype based on the entire file name
     filename = {
         [".env"] = "sh",
         ["env"] = "sh",
     },
 
-    -- Apply file type based on patterns of in filename
+    -- Pattern matching for filetype
     pattern = {
-        -- Match filenames like - ".env.staging", ".env.local" ...
+        -- ".env.staging", ".env.local" ...
         ["%.env%.[%w_.-]+"] = "sh",
     },
 })

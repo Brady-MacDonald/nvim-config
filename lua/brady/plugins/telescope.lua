@@ -11,17 +11,66 @@ return {
 
             require("telescope").setup({})
 
+            --- Change the highlight for Telescope to the given theme
+            ---@param name string
+            local function set_telescope_highlights(name)
+                local colors = require("brady.themes").get_theme(name)
+                local telescope_hl = require("brady.themes.highlights.telescope").get_highlight_groups(colors)
+                for hl, val in pairs(telescope_hl) do
+                    vim.api.nvim_set_hl(0, hl, val)
+                end
+            end
+
             vim.keymap.set("n", "z=", builtin.spell_suggest, { desc = "Telescope: SpellSuggest" })
             vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope: HelpTags" })
             vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope: Keymaps" })
             vim.keymap.set("n", "<leader>tl", builtin.builtin, { desc = "Telescope: Builtin" })
-
-            vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope: FindFiles" })
             vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope: FindBuffers" })
 
-            vim.keymap.set("n", "<leader>sg", builtin.grep_string, { desc = "Telescope: StringGrep" })
-            vim.keymap.set("n", "<leader>lg", builtin.live_grep, { desc = "Telescope: LiveGrep" })
-            vim.keymap.set("n", "<leader>bg", builtin.current_buffer_fuzzy_find, { desc = "Telescope: BufferGrep" })
+            vim.keymap.set("n", "<leader>ff", function()
+                set_telescope_highlights("dracula")
+                builtin.find_files({
+                    prompt_prefix = "   ",
+                    selection_caret = " ",
+                    entry_prefix = " ",
+                    sorting_strategy = "ascending",
+                    layout_config = {
+                        horizontal = {
+                            prompt_position = "top",
+                            preview_width = 0.55,
+                        },
+                        width = 0.87,
+                        height = 0.80,
+                    },
+                    mappings = {
+                        n = { ["q"] = require("telescope.actions").close },
+                    },
+                })
+            end, { desc = "Telescope: FindFiles" })
+
+            vim.keymap.set("n", "<leader>sg", function()
+                set_telescope_highlights("oxo")
+                builtin.grep_string(themes.get_ivy({
+                    prompt_prefix = "  ",
+                    prompt_title = "String Grep"
+                }))
+            end, { desc = "Telescope: StringGrep" })
+
+            vim.keymap.set("n", "<leader>lg", function()
+                set_telescope_highlights("oxo")
+                builtin.live_grep(themes.get_ivy({
+                    prompt_prefix = "  ",
+                    prompt_title = "Live Grep"
+                }))
+            end, { desc = "Telescope: LiveGrep" })
+
+            vim.keymap.set("n", "<leader>bg", function()
+                set_telescope_highlights("oxo")
+                builtin.current_buffer_fuzzy_find(themes.get_ivy({
+                    prompt_prefix = "  ",
+                    prompt_title = "Buffer Grep"
+                }))
+            end, { desc = "Telescope: BufferGrep" })
 
             vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Telescope: GitStatus" })
             vim.keymap.set("n", "<leader>gf", builtin.git_files, { desc = "Telescope: GitFiles" })
@@ -32,7 +81,7 @@ return {
 
             local config_opts = {
                 search_dirs = { "~/.config/nvim" },
-                prompt_prefix = "config -> ",
+                prompt_prefix = "config   ",
                 prompt_title = "Search Config"
             }
 
@@ -41,7 +90,7 @@ return {
 
             local notes_opts = {
                 search_dirs = { "~/notes/nvim" },
-                prompt_prefix = "notes -> ",
+                prompt_prefix = "notes   ",
                 prompt_title = "Search Notes",
                 prompt_position = "top"
             }

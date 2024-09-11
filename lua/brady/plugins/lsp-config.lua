@@ -6,6 +6,7 @@ return {
     -- Mason: manages installing LSP
     {
         "williamboman/mason.nvim",
+        cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
         config = function()
             require("mason").setup()
         end
@@ -29,6 +30,7 @@ return {
     -- nvim-lspconfig: Used by lsp startup config
     {
         "neovim/nvim-lspconfig",
+        event = "VeryLazy",
         config = function()
             require("neodev").setup()
 
@@ -88,7 +90,7 @@ return {
                     vim.keymap.set('n', 'grn', vim.lsp.buf.rename,
                         { desc = "LSP: textDocument/rename", buffer = 0 })
                     vim.keymap.set('n', 'grr', vim.lsp.buf.references,
-                        { desc = "LSP: textDocument/rename", buffer = 0 })
+                        { desc = "LSP: textDocument/references", buffer = 0 })
 
                     -- Where to add signatureHelp??
                     vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
@@ -114,9 +116,9 @@ return {
                         { desc = "Telescope: textDocument/diagnostics", buffer = 0 })
                     vim.keymap.set("n", "<leader>ds", telescope_builtin.lsp_document_symbols,
                         { desc = "Telescope: textDocument/symbols", buffer = 0 })
-                    vim.keymap.set("n", "<leader>ps", telescope_builtin.lsp_dynamic_workspace_symbols,
-                        { desc = "Telescope: workSpace/symbols", buffer = 0 })
-                    vim.keymap.set("n", "<leader>ws", telescope_builtin.lsp_workspace_symbols,
+                    vim.keymap.set("n", "<leader>ws", telescope_builtin.lsp_dynamic_workspace_symbols,
+                        { desc = "Telescope: workSpace/dynamic_symbols", buffer = 0 })
+                    vim.keymap.set("n", "<leader>ls", telescope_builtin.lsp_workspace_symbols,
                         { desc = "Telescope: workSpace/symbols", buffer = 0 })
 
                     vim.api.nvim_create_autocmd("BufWritePre", {
@@ -139,6 +141,7 @@ return {
     },
     {
         "jmederosalvarado/roslyn.nvim",
+        event = "VeryLazy",
         config = function()
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             require("roslyn").setup({

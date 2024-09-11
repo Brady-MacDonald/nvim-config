@@ -1,7 +1,7 @@
 return {
     {
         "folke/noice.nvim",
-        events = "VeryLazy",
+        event = "VeryLazy",
         config = function()
             require("noice").setup({
                 routes = {
@@ -23,6 +23,10 @@ return {
         "rcarriga/nvim-notify",
         config = function()
             vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<CR>")
+
+            require("notify").setup({
+                background_colour = "#000000",
+            })
             require("telescope").load_extension("noice")
             require('telescope').load_extension("notify")
         end
