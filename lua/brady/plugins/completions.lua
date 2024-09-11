@@ -1,7 +1,7 @@
 return {
     { "hrsh7th/cmp-buffer" },
     { "hrsh7th/cmp-path" },
-    { "hrsh7th/cmp-nvim-lsp" }, -- Auto imports
+    { "hrsh7th/cmp-nvim-lsp" },
     { "onsails/lspkind-nvim" }, -- Icons for completions
 
     -- used as a source to be used by nvim-cmp
@@ -34,6 +34,7 @@ return {
     -- nvim-cmp is the completion engine that reaches out to the various sources
     {
         "hrsh7th/nvim-cmp",
+        event = "InsertEnter",
         config = function()
             local cmp = require("cmp")
             local lspkind = require("lspkind")
@@ -48,6 +49,7 @@ return {
                     { name = "luasnip" },
                     { name = "nvim_lsp" },
                     { name = "buffer" },
+                    { name = "path" },
                 },
 
                 -- Setting up mapping
@@ -71,8 +73,8 @@ return {
                 },
 
                 -- Format sources
+                ---@diagnostic disable-next-line: missing-fields
                 formatting = {
-                    ---@diagnostic disable-next-line: missing-fields
                     format = lspkind.cmp_format {
                         with_text = true,
                         menu = {

@@ -1,5 +1,6 @@
 return {
     'MeanderingProgrammer/markdown.nvim',
+    event = "VeryLazy",
     dependencies = {
         'nvim-treesitter/nvim-treesitter',
         'nvim-tree/nvim-web-devicons',
@@ -8,4 +9,3 @@ return {
         require('render-markdown').setup({})
     end,
 }
-

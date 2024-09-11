@@ -8,6 +8,9 @@ return {
             skip_confirm_for_simple_edits = true,
             float = {
                 padding = 10,
+            },
+            view_options = {
+                show_hidden = true,
             }
         })
 

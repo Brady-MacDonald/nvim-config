@@ -5,10 +5,44 @@
 --------------------------
 return {
     {
-        -- Nvim DAP Client
         "mfussenegger/nvim-dap",
         config = function()
             local dap = require("dap")
+
+            dap.adapters.cppdbg = {
+                id = 'cppdbg',
+                type = 'executable',
+                command = '/home/bmacdonald/.local/share/nvim/mason/bin/OpenDebugAD7',
+            }
+
+            dap.configurations.cpp = {
+                {
+                    name = "Launch Executable",
+                    type = "cppdbg",
+                    request = "launch",
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                    cwd = '${workspaceFolder}',
+                    stopAtEntry = true,
+                },
+                {
+                    name = 'Attach to gdbserver :1234',
+                    type = 'cppdbg',
+                    request = 'launch',
+                    MIMode = 'gdb',
+                    miDebuggerServerAddress = 'localhost:1234',
+                    miDebuggerPath = '/usr/bin/gdb',
+                    cwd = '${workspaceFolder}',
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
+                },
+            }
+
+            dap.configurations.c = dap.configurations.cpp
+            dap.configurations.rust = dap.configurations.cpp
+
             -- local dap_utils = require("dap.utils")
             local dap_widgets = require("dap.ui.widgets")
 
@@ -17,9 +51,13 @@ return {
             vim.keymap.set("n", "<leader>so", dap.step_over, { desc = "Dap: StepOver" })
             vim.keymap.set("n", "<leader>si", dap.step_into, { desc = "Dap: StepInto" })
             vim.keymap.set("n", "<leader>su", dap.step_out, { desc = "Dap: StepOut" })
-            vim.keymap.set("n", "<leader>dr", dap.restart, { desc = "Dap: Restart" })
-            vim.keymap.set("n", "<leader>cb", dap.clear_breakpoints, { desc = "Dap: ClearBreakpoint" })
-            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: Breakpoint" })
+            vim.keymap.set("n", "<leader>cb", dap.clear_breakpoints, { desc = "Dap: ClearBreakpoints" })
+            vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: ToggleBreakpoint" })
+            vim.keymap.set("n", "<leader>dr", function()
+                dap.repl.toggle()
+                vim.api.nvim_input("<C-w>ji") -- move to repl window
+            end
+            , { desc = "Dap: ToggleRepl" })
 
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
