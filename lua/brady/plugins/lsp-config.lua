@@ -42,18 +42,9 @@ return {
             -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
 
-            -- require("lspconfig").arduino_language_server.setup {
-            --     cmd = {
-            --         "arduino-language-server",
-            --         "-cli", "/home/bmacdonald/go/bin/arduino-cli",
-            --         "-cli-config", "/home/bmacdonald/.arduino15/arduino-cli.yaml",
-            --         "-fqbn", "arduino:avr:nano"
-            --     }
-            -- }
-
             lspconfig.clangd.setup({})
             lspconfig.lua_ls.setup({})
-            lspconfig.tsserver.setup({})
+            -- lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
             lspconfig.pylsp.setup({})
             lspconfig.volar.setup({})

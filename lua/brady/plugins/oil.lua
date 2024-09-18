@@ -16,5 +16,6 @@ return {
 
         vim.keymap.set("n", "-", oil.open_float)
         vim.keymap.set("n", "<leader>-", oil.open)
+        vim.keymap.set("n", "<leader>-r", function() oil.open(vim.fn.getcwd()) end)
     end
 }

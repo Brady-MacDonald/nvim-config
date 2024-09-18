@@ -9,7 +9,13 @@ return {
             local builtin = require("telescope.builtin")
             local themes = require("telescope.themes")
 
-            require("telescope").setup({})
+            require('telescope').setup {
+                defaults = {
+                    file_ignore_patterns = {
+                        "node_modules"
+                    }
+                }
+            }
 
             --- Change the highlight for Telescope to the given theme
             ---@param name string
@@ -24,9 +30,9 @@ return {
             vim.keymap.set("n", "z=", builtin.spell_suggest, { desc = "Telescope: SpellSuggest" })
             vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope: HelpTags" })
             vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope: Keymaps" })
-            vim.keymap.set("n", "<leader>tl", builtin.builtin, { desc = "Telescope: Builtin" })
-            vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope: FindBuffers" })
+            vim.keymap.set("n", "<leader>tb", builtin.builtin, { desc = "Telescope: Builtin" })
 
+            vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope: FindBuffers" })
             vim.keymap.set("n", "<leader>ff", function()
                 set_telescope_highlights("dracula")
                 builtin.find_files({
@@ -49,7 +55,7 @@ return {
             end, { desc = "Telescope: FindFiles" })
 
             vim.keymap.set("n", "<leader>sg", function()
-                set_telescope_highlights("oxo")
+                set_telescope_highlights("rosepine")
                 builtin.grep_string(themes.get_ivy({
                     prompt_prefix = "  ",
                     prompt_title = "String Grep"
@@ -57,7 +63,7 @@ return {
             end, { desc = "Telescope: StringGrep" })
 
             vim.keymap.set("n", "<leader>lg", function()
-                set_telescope_highlights("oxo")
+                set_telescope_highlights("rosepine")
                 builtin.live_grep(themes.get_ivy({
                     prompt_prefix = "  ",
                     prompt_title = "Live Grep"
@@ -65,7 +71,7 @@ return {
             end, { desc = "Telescope: LiveGrep" })
 
             vim.keymap.set("n", "<leader>bg", function()
-                set_telescope_highlights("oxo")
+                set_telescope_highlights("rosepine")
                 builtin.current_buffer_fuzzy_find(themes.get_ivy({
                     prompt_prefix = "  ",
                     prompt_title = "Buffer Grep"
@@ -92,7 +98,11 @@ return {
                 search_dirs = { "~/notes/nvim" },
                 prompt_prefix = "notes   ",
                 prompt_title = "Search Notes",
-                prompt_position = "top"
+                prompt_position = "top",
+                layout_config = {
+                    width = 100,
+                    height = 20,
+                },
             }
 
             local grep_notes = function() builtin.live_grep(notes_opts) end
