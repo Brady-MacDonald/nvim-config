@@ -13,6 +13,32 @@ vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight"
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
 
+vim.keymap.set('n', '<leader>cb', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current buffers directory" })
+vim.keymap.set('n', '<leader>cd', function()
+    local root = require("lspconfig.util")
+
+    local ft = vim.bo.filetype
+    local path = vim.fn.expand("%:p:h")
+
+    if ft == "lua" then
+        local lua_root = root.root_pattern(".git", "init.lua")
+        local cwd = lua_root(path)
+        vim.cmd("cd " .. cwd)
+    elseif ft == "go" then
+        local lua_root = root.root_pattern(".git", "go.mod")
+        local cwd = lua_root(path)
+        vim.cmd("cd " .. cwd)
+    elseif ft == "typescript" or ft == "javascript" then
+        local ts_root = root.root_pattern(".git", "package.json")
+        local cwd = ts_root(path)
+        vim.cmd("cd " .. cwd)
+    else
+        vim.notify("No root found for filetype: " .. ft)
+    end
+
+    vim.cmd("pwd")
+end, { desc = "cd into project root" })
+
 vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "BufferNext" })
 vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { desc = "BufferPrev" })
 vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "BufferDelete" })
