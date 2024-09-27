@@ -9,9 +9,12 @@ return {
                 panel = { enabled = false },
             })
 
+            vim.keymap.set("n", "<Leader>pd", "<cmd>Copilot disable<CR>", { desc = "Copilot: Disable" })
+            vim.keymap.set("n", "<Leader>pe", "<cmd>Copilot enable<CR>", { desc = "Copilot: Enable" })
+
             local panel = require("copilot.panel")
             vim.keymap.set("n", "<Leader>po", panel.open, { desc = "Copilot: Open" })
-            vim.keymap.set("n", "<Leader>pd", panel.teardown, { desc = "Copilot: TearDown" })
+            vim.keymap.set("n", "<Leader>pt", panel.teardown, { desc = "Copilot: TearDown" })
             vim.keymap.set("n", "<Leader>pr", panel.refresh, { desc = "Copilot: Refresh" })
             vim.keymap.set("n", "<Leader>pn", panel.jump_next, { desc = "Copilot: Next" })
             vim.keymap.set("n", "<Leader>pp", panel.jump_prev, { desc = "Copilot: Prev" })

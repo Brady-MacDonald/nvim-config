@@ -7,7 +7,7 @@ return {
             default_file_explorer = true,
             skip_confirm_for_simple_edits = true,
             float = {
-                padding = 10,
+                padding = 3,
             },
             view_options = {
                 show_hidden = true,

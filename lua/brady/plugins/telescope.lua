@@ -11,9 +11,7 @@ return {
 
             require('telescope').setup {
                 defaults = {
-                    file_ignore_patterns = {
-                        "node_modules"
-                    }
+                    file_ignore_patterns = { "node_modules", "pkg" }
                 }
             }
 
@@ -31,6 +29,7 @@ return {
             vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope: HelpTags" })
             vim.keymap.set("n", "<leader>tk", builtin.keymaps, { desc = "Telescope: Keymaps" })
             vim.keymap.set("n", "<leader>tb", builtin.builtin, { desc = "Telescope: Builtin" })
+            vim.keymap.set("n", "<leader>tr", builtin.registers, { desc = "Telescope: Registers" })
 
             vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope: FindBuffers" })
             vim.keymap.set("n", "<leader>ff", function()

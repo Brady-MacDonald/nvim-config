@@ -1,12 +1,10 @@
 --------------------------
 -- LSP Config
 --------------------------
-
 return {
-    -- Mason: manages installing LSP
     {
         "williamboman/mason.nvim",
-        cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
+        cmd = { "Mason", "MasonLog", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
         config = function()
             require("mason").setup()
         end
@@ -76,20 +74,21 @@ return {
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
                 group = vim.api.nvim_create_augroup("LspKeymaps", {}),
-                callback = function(event_data)
+                callback = function()
                     -- Defaults in nvim 0.11
                     vim.keymap.set('n', 'grn', vim.lsp.buf.rename,
                         { desc = "LSP: textDocument/rename", buffer = 0 })
                     vim.keymap.set('n', 'grr', vim.lsp.buf.references,
                         { desc = "LSP: textDocument/references", buffer = 0 })
+                    vim.keymap.set('n', 'gra', vim.lsp.buf.code_action,
+                        { desc = "LSP: textDocument/codeactions", buffer = 0 })
+                    vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help,
+                        { desc = "LSP: textDocument/signatureHelp", buffer = 0 })
 
-                    -- Where to add signatureHelp??
-                    vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
-                        { desc = "LSP: textDocument/hover", buffer = 0 })
                     vim.keymap.set('i', '<C-h>', vim.lsp.buf.code_action,
                         { desc = "LSP: textDocument/codeactions", buffer = 0 })
-                    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
-                        { desc = "LSP: textDocument/codeactions", buffer = 0 })
+                    vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
+                        { desc = "LSP: textDocument/hover", buffer = 0 })
                     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
                         { desc = "LSP: textDocument/definition", buffer = 0 })
                     vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition,

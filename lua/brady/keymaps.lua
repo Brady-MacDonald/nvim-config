@@ -13,29 +13,29 @@ vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight"
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
 
-vim.keymap.set('n', '<leader>cb', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current buffers directory" })
+vim.keymap.set('n', '<leader>cf', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current files directory" })
 vim.keymap.set('n', '<leader>cd', function()
-    local root = require("lspconfig.util")
+    local function get_ft_root(ft)
+        local root = require("lspconfig.util")
+
+        if ft == "lua" then
+            return root.root_pattern(".git", "init.lua")
+        elseif ft == "go" then
+            return root.root_pattern(".git", "go.mod")
+        elseif ft == "typescript" or ft == "javascript" then
+            return root.root_pattern(".git", "package.json")
+        else
+            vim.notify("No root dir found for filetype: " .. ft)
+        end
+    end
 
     local ft = vim.bo.filetype
     local path = vim.fn.expand("%:p:h")
 
-    if ft == "lua" then
-        local lua_root = root.root_pattern(".git", "init.lua")
-        local cwd = lua_root(path)
-        vim.cmd("cd " .. cwd)
-    elseif ft == "go" then
-        local lua_root = root.root_pattern(".git", "go.mod")
-        local cwd = lua_root(path)
-        vim.cmd("cd " .. cwd)
-    elseif ft == "typescript" or ft == "javascript" then
-        local ts_root = root.root_pattern(".git", "package.json")
-        local cwd = ts_root(path)
-        vim.cmd("cd " .. cwd)
-    else
-        vim.notify("No root found for filetype: " .. ft)
-    end
+    local ft_root = get_ft_root(ft)
+    local cwd = ft_root(path)
 
+    vim.cmd("cd " .. cwd)
     vim.cmd("pwd")
 end, { desc = "cd into project root" })
 
