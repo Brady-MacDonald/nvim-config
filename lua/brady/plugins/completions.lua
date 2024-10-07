@@ -57,6 +57,7 @@ return {
                     { name = "nvim_lsp" },
                     { name = "buffer" },
                     { name = "path" },
+                    { name = "local_ls" },
                 },
 
                 mapping = {
@@ -87,7 +88,7 @@ return {
                             nvim_lsp = "[LSP]",
                             buffer = "[BUF]",
                             path = "[PATH]",
-                            gh_issues = "[GH_ISS]"
+                            local_ls = "[LS -A]"
                         },
                     }),
                 },

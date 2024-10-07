@@ -9,8 +9,10 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<leader>o', 'o<escape>')
 vim.keymap.set('n', '<leader>O', 'O<escape>')
 
+vim.keymap.set("x", "<leader>v", '"_dP', { desc = "Paste VOID" })
 vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight" })
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })
+
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
 
 vim.keymap.set('n', '<leader>cf', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current files directory" })

@@ -32,6 +32,7 @@ return {
             dashboard.button("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | wincmd k | pwd<CR>"),
             dashboard.button("n", "  > Notes", ":e ~/notes/today.md | :cd %:p:h | pwd<CR>"),
             dashboard.button("z", "  > ZSH", ":e $ZDOTDIR/.zshrc | :cd %:p:h | pwd<CR>"),
+            dashboard.button("l", "󰒲  > Lazy", ":Lazy<CR>"),
             dashboard.button("q", "󰩈  > Quit NVIM", ":qa<CR>"),
         }
 

@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 -- Custom Completion Source for nvim-cmp
 -- Can write our code to fetch data to be populated in the completion list from anywhere
 
@@ -7,7 +9,6 @@ if not ok then
 end
 
 local source = {}
-
 local enabled = true
 
 source.new = function()
@@ -42,7 +43,7 @@ source.complete = function(self, _, callback)
                         label = string.format("#%s", ls_item),
                         documentation = {
                             kind = "markdown",
-                            value = string.format("# %s\n\n%s", ls_item, "oay"),
+                            value = string.format("# %s\n\n%s", ls_item, "Here it is\n$ ls -a"),
                         },
                     })
                 end
@@ -64,4 +65,4 @@ source.is_available = function()
     return vim.bo.filetype == "lua"
 end
 
-require("cmp").register_source("gh_issues", source.new())
+require("cmp").register_source("local_ls", source.new())

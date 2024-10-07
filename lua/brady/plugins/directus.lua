@@ -3,10 +3,12 @@ return {
     dependencies = { 'nvim-telescope/telescope.nvim' },
     config = function()
         local directus = require("directus")
+        local url = vim.env.DIRECTUS_URL
+        local token = vim.env.DIRECTUS_TOKEN
 
         directus.setup({
-            url = "https://directus-uat.sbrfeeds.com",
-            token = "4a1c8fa80f4c4d2c887a0fe628fcf353",
+            url = url,
+            token = token,
             show_hidden = true
         })
     end
