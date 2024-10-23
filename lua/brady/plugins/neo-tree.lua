@@ -1,7 +1,7 @@
 return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    event = "VeryLazy",
+    cmd = "Neotree",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
@@ -24,7 +24,7 @@ return {
             }
         })
 
-        vim.keymap.set("n", "<leader>e", "<cmd>Neotree filesystem reveal left<CR>", { desc = "Neotree: RevealLeft" })
-        vim.keymap.set("n", "<leader>w", "<cmd>Neotree filesystem reveal right<CR>", { desc = "Neotree: RevealRight" })
+        vim.keymap.set("n", "<leader>ne", "<cmd>Neotree filesystem reveal left<CR>", { desc = "Neotree: RevealLeft" })
+        vim.keymap.set("n", "<leader>nw", "<cmd>Neotree filesystem reveal right<CR>", { desc = "Neotree: RevealRight" })
     end,
 }

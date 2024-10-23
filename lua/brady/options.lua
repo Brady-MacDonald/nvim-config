@@ -19,9 +19,4 @@ vim.opt.wrap = false
 vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 
-vim.opt.foldenable = false
-vim.opt.foldmethod = "indent"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = 1
-
 vim.opt.swapfile = false

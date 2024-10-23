@@ -1,6 +1,5 @@
 -- Global Functions
 
--- print a lua table
 P = function(t)
     print(vim.inspect(t))
     return t

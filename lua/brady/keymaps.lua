@@ -9,11 +9,15 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<leader>o', 'o<escape>')
 vim.keymap.set('n', '<leader>O', 'O<escape>')
 
-vim.keymap.set("x", "<leader>v", '"_dP', { desc = "Paste VOID" })
+vim.keymap.set("x", "<leader>vp", '"_dP', { desc = "Void: Paste" })
+vim.keymap.set("x", "<leader>vd", '"_d', { desc = "Void: Delete" })
+
 vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight" })
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
+vim.keymap.set("n", "<leader>af", "<cmd>e#<CR>", { desc = "Alternate File" })
+vim.keymap.set("n", "<leader>m", "<S-%>", { desc = "Paren" })
 
 vim.keymap.set('n', '<leader>cf', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current files directory" })
 vim.keymap.set('n', '<leader>cd', function()
@@ -41,9 +45,20 @@ vim.keymap.set('n', '<leader>cd', function()
     vim.cmd("pwd")
 end, { desc = "cd into project root" })
 
-vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "BufferNext" })
-vim.keymap.set("n", "<leader>bp", "<cmd>bprev<CR>", { desc = "BufferPrev" })
-vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "BufferDelete" })
+vim.keymap.set("n", "<leader>df", function()
+    local format = vim.g.format
+    if format then
+        vim.notify("Disabled: Formatting on save")
+    else
+        vim.notify("Enabled: Formatting on save")
+    end
+
+    vim.g.format = not format
+end, { desc = "Disable formatting on save" })
+
+vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Buffer: Next" })
+vim.keymap.set("n", "<leader>bb", "<cmd>bprev<CR>", { desc = "Buffer: Back" })
+vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "Buffer: Delete" })
 
 vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>', { desc = "QuickfixList :cnext" })
 vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>', { desc = "QuickfixList :cprev" })

@@ -42,7 +42,7 @@ return {
 
             lspconfig.clangd.setup({})
             lspconfig.lua_ls.setup({})
-            -- lspconfig.tsserver.setup({})
+            lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
             lspconfig.pylsp.setup({})
             lspconfig.volar.setup({})
@@ -115,12 +115,10 @@ return {
                         desc = "textDocument/formatting Request on BufWritePre",
                         group = vim.api.nvim_create_augroup("LspFormatPreWrite", {}),
                         callback = function(ev)
-                            local sbr = string.find(ev.match, "/sportsbookreview/")
-                            local nssmp = string.find(ev.match, "/nssmp/")
-                            local not_sbr = sbr == nil and nssmp == nil
+                            local format = vim.g.format
 
                             local buf_clients = vim.lsp.get_clients({ bufnr = ev.buf })
-                            if not_sbr and #buf_clients ~= 0 and buf_clients[1].server_capabilities.documentFormattingProvider then
+                            if format and #buf_clients ~= 0 and buf_clients[1].server_capabilities.documentFormattingProvider then
                                 vim.lsp.buf.format()
                             end
                         end

@@ -9,6 +9,7 @@ return {
     -- Can create our own snippets for this plugin to be used
     {
         "L3MON4D3/LuaSnip",
+        event = "InsertEnter",
         dependencies = {
             "saadparwaiz1/cmp_luasnip",
         },
@@ -52,12 +53,12 @@ return {
                 },
 
                 sources = {
-                    { name = "copilot" },
                     { name = "luasnip" },
                     { name = "nvim_lsp" },
                     { name = "buffer" },
                     { name = "path" },
                     { name = "local_ls" },
+                    { name = "copilot" },
                 },
 
                 mapping = {

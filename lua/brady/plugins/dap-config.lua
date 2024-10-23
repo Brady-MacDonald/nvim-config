@@ -140,9 +140,9 @@ return {
             for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
                 dap.configurations[language] = {
                     {
+                        name = "Launch file",
                         type = "pwa-node",
                         request = "launch",
-                        name = "Launch file",
                         program = "${file}",
                         cwd = "${workspaceFolder}",
                     },
@@ -154,10 +154,16 @@ return {
                         cwd = "${workspaceFolder}",
                     },
                     {
+                        name = "Auto Attach",
+                        type = "pwa-node",
+                        request = "attach",
+                        cwd = vim.fn.getcwd()
+                    },
+                    {
+                        name = "Start Chrome with \"localhost:3000\"",
                         type = "pwa-chrome",
-                        request = "launch",
-                        name = "Start Chrome with \"localhost\"",
                         url = "http://localhost:3000",
+                        request = "launch",
                         webRoot = "${workspaceFolder}",
                         userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
                     }

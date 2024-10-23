@@ -1,5 +1,6 @@
 return {
     'stevearc/oil.nvim',
+    event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
         local oil = require("oil")
@@ -14,8 +15,8 @@ return {
             }
         })
 
-        vim.keymap.set("n", "-", oil.open_float)
-        vim.keymap.set("n", "<leader>-", oil.open)
-        vim.keymap.set("n", "<leader>-r", function() oil.open(vim.fn.getcwd()) end)
+        vim.keymap.set("n", "<leader>ef", oil.open_float, { desc = "Oil: Float" })
+        vim.keymap.set("n", "<leader>ew", oil.open, { desc = "Oil: Open" })
+        vim.keymap.set("n", "<leader>er", function() oil.open(vim.fn.getcwd()) end, { desc = "Oil: Root" })
     end
 }
