@@ -45,8 +45,17 @@ return {
             lspconfig.tsserver.setup({})
             lspconfig.jsonls.setup({})
             lspconfig.pylsp.setup({})
-            lspconfig.volar.setup({})
+            lspconfig.bashls.setup({})
             lspconfig.dockerls.setup({})
+            lspconfig.volar.setup {
+                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+                init_options = {
+                    vue = {
+                        hybridMode = false,
+                    },
+                },
+            }
+
             lspconfig.cssls.setup({})
             lspconfig.html.setup({
                 filetypes = { "html", "template" }

@@ -17,7 +17,7 @@ vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:ge
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
 vim.keymap.set("n", "<leader>af", "<cmd>e#<CR>", { desc = "Alternate File" })
-vim.keymap.set("n", "<leader>m", "<S-%>", { desc = "Paren" })
+vim.keymap.set({ "n", "v" }, "<leader>m", "<S-%>", { desc = "Paren" })
 
 vim.keymap.set('n', '<leader>cf', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current files directory" })
 vim.keymap.set('n', '<leader>cd', function()

@@ -36,3 +36,12 @@ vim.filetype.add({
         ["%.env%.[%w_.-]+"] = "sh",
     },
 })
+
+vim.api.nvim_create_autocmd("filetype", {
+    group = vim.api.nvim_create_augroup("VueCommentString", {}),
+    desc = "Comment string for Vue files",
+    pattern = "vue",
+    callback = function()
+        vim.bo.commentstring = "<!-- %s -->"
+    end
+})
