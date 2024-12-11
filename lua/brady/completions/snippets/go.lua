@@ -36,8 +36,17 @@ luasnip.add_snippets("go", {
         ))
 })
 
+-- If Err Panic
+luasnip.add_snippets("go", {
+    snippet("iep",
+        fmt('if err != nil {{\n  panic(err)\n}}\n{}',
+            { iNode(1) }
+        ))
+})
+
 -- Err Not Nil
 luasnip.add_snippets("go", {
+    -- TODO:
     snippet("enn",
         fmt('if err != nil {{\n  {}(err)\n}}\n{}',
             { iNode(1), iNode(2) }

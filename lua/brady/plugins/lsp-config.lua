@@ -42,7 +42,7 @@ return {
 
             lspconfig.clangd.setup({})
             lspconfig.lua_ls.setup({})
-            lspconfig.tsserver.setup({})
+            lspconfig.ts_ls.setup({})
             lspconfig.jsonls.setup({})
             lspconfig.pylsp.setup({})
             lspconfig.bashls.setup({})

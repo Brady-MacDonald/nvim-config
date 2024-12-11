@@ -24,12 +24,11 @@ return {
 
         dashboard.section.buttons.val = {
             dashboard.button("f", "󰈞  > Find Files", ":Telescope find_files<CR>"),
-            dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
             dashboard.button("s", "  > Settings", ":e $MYVIMRC | :cd %:p:h | wincmd k | pwd<CR>"),
-            dashboard.button("n", "  > Notes", ":e ~/notes/today.md | :cd %:p:h | pwd<CR>"),
+            dashboard.button("n", "  > Notes", ":e $BRADY_MACDONALD_HOME/notes/today.md | :cd %:p:h | pwd<CR>"),
             dashboard.button("z", "  > ZSH", ":e $ZDOTDIR/.zshrc | :cd %:p:h | pwd<CR>"),
             dashboard.button("l", "󰒲  > Lazy", ":Lazy<CR>"),
-            dashboard.button("h", "  > Hyprland", ":e ~/.config/hypr/hyprland.conf | :cd %:p:h | pwd<CR>"),
+            dashboard.button("h", "  > Hyprland", ":e $XDG_CONFIG_HOME/hypr/hyprland.conf | :cd %:p:h | pwd<CR>"),
             dashboard.button("q", "󰩈  > Quit NVIM", ":qa<CR>"),
         }
 

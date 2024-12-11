@@ -11,7 +11,7 @@ return {
                             col = "50%",
                         },
                         size = {
-                            width = 60,
+                            width = 70,
                             height = "auto",
                         },
                     },
@@ -52,9 +52,15 @@ return {
     {
         "rcarriga/nvim-notify",
         config = function()
+            local notify = require("notify")
+
+            notify.setup({
+                background_colour = "#000000",
+            })
+
+            vim.keymap.set("n", "<leader>nd", notify.dismiss, { desc = "Notify Dismiss" })
             vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<CR>")
 
-            require("notify").setup({ background_colour = "#000000", })
             require("telescope").load_extension("noice")
             require('telescope').load_extension("notify")
         end
