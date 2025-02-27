@@ -18,15 +18,27 @@ vim.keymap.set("n", "<C-w>.", "<c-w>5>")
 -- vim.keymap.set("n", "<M-t>", "<C-W>+")
 -- vim.keymap.set("n", "<M-s>", "<C-W>-")
 
+vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>source %<CR>", { desc = "Exec file" })
+vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Exec line" })
+vim.keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Exec visual selection" })
+
 vim.keymap.set("x", "<leader>vp", '"_dP', { desc = "Void: Paste" })
 vim.keymap.set("x", "<leader>vd", '"_d', { desc = "Void: Delete" })
 
 vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight" })
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })
 
-vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>so<CR>", { desc = "Exec file" })
 vim.keymap.set("n", "<leader>af", "<cmd>e#<CR>", { desc = "Alternate File" })
-vim.keymap.set({ "n", "v" }, "<leader>m", "<S-%>", { desc = "Paren" })
+vim.keymap.set({ "n", "v" }, "<leader>m", "<S-%>", { desc = "Match Parenthesis" })
+
+vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Buffer: Next" })
+vim.keymap.set("n", "<leader>bb", "<cmd>bprev<CR>", { desc = "Buffer: Back" })
+vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "Buffer: Delete" })
+
+vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>', { desc = "QuickfixList :cnext" })
+vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>', { desc = "QuickfixList :cprev" })
+vim.keymap.set('n', '<C-c>', '<cmd>cclose<CR>', { desc = "QuickfixList :cclose" })
+vim.keymap.set('n', '<leader><c-o>', '<cmd>copen<cr>', { desc = "quickfixlist :copen" })
 
 vim.keymap.set('n', '<leader>cf', "<cmd>cd %:p:h | pwd <CR>", { desc = "cd into current files directory" })
 vim.keymap.set('n', '<leader>cd', function()
@@ -39,6 +51,8 @@ vim.keymap.set('n', '<leader>cd', function()
             return root.root_pattern(".git", "go.mod")
         elseif ft == "typescript" or ft == "javascript" then
             return root.root_pattern(".git", "package.json")
+
+            -- Check for .git directory
         else
             vim.notify("No root dir found for filetype: " .. ft)
         end
@@ -63,29 +77,13 @@ vim.keymap.set("n", "<leader>df", function()
     end
 
     vim.g.format = not format
-end, { desc = "Disable formatting on save" })
+end, { desc = "Toggle formatting on save" })
 
-vim.keymap.set("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Buffer: Next" })
-vim.keymap.set("n", "<leader>bb", "<cmd>bprev<CR>", { desc = "Buffer: Back" })
-vim.keymap.set("n", "<leader>bd", "<cmd>bnext<CR><cmd>bd#<CR>", { desc = "Buffer: Delete" })
-
-vim.keymap.set('n', '<C-j>', '<cmd>cnext<CR>', { desc = "QuickfixList :cnext" })
-vim.keymap.set('n', '<C-k>', '<cmd>cprev<CR>', { desc = "QuickfixList :cprev" })
-vim.keymap.set('n', '<C-c>', '<cmd>cclose<CR>', { desc = "QuickfixList :cclose" })
-vim.keymap.set('n', '<leader><c-o>', '<cmd>copen<cr>', { desc = "quickfixlist :copen" })
-
--- Diagnostics
 vim.keymap.set('n', '[o', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
 vim.keymap.set("n", "<leader>dd", function()
     local diag = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not diag)
 end, { desc = "Toggle Diagnostics" })
-
--- Git Restore File
-vim.keymap.set('n', '<leader>grf', function()
-    local file = vim.fn.expand("%")
-    io.popen("git restore " .. file)
-end, { desc = "Git: Restore %" })
 
 vim.keymap.set("n", "<leader><leader>sbr", function()
     require("sbr").setup()
@@ -101,3 +99,15 @@ vim.keymap.set("n", "<leader><leader>c", function()
     local colors = theme_picker.get_theme(color_scheme)
     theme_picker.apply_themes(colors)
 end, { desc = "COLORS" })
+
+
+vim.keymap.set("n", "<leader>tf", function()
+    local ext = vim.fn.expand("%:e")
+    if ext == "go" then
+        local file = vim.fn.expand("%:p:r") .. "_test.go"
+        print("Opening: " .. file)
+        vim.cmd("e " .. file)
+    else
+        print "Not a .go file..."
+    end
+end, { desc = "Open correspndong test file" })

@@ -58,7 +58,6 @@ return {
                     { name = "buffer" },
                     { name = "path" },
                     { name = "local_ls" },
-                    { name = "copilot" },
                 },
 
                 mapping = {
@@ -84,7 +83,6 @@ return {
                     format = lspkind.cmp_format({
                         with_text = true,
                         menu = {
-                            copilot = "[AI]",
                             luasnip = "[SNIP]",
                             nvim_lsp = "[LSP]",
                             buffer = "[BUF]",
