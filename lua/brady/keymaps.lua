@@ -79,11 +79,11 @@ vim.keymap.set("n", "<leader>df", function()
     vim.g.format = not format
 end, { desc = "Toggle formatting on save" })
 
-vim.keymap.set('n', '[o', vim.diagnostic.open_float, { desc = "Diagnostic: Open" })
+vim.keymap.set('n', '[o', vim.diagnostic.open_float, { desc = "Diagnostics: Open" })
 vim.keymap.set("n", "<leader>dd", function()
     local diag = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not diag)
-end, { desc = "Toggle Diagnostics" })
+end, { desc = "Diagnostics: Toggle" })
 
 vim.keymap.set("n", "<leader><leader>sbr", function()
     require("sbr").setup()
@@ -100,14 +100,25 @@ vim.keymap.set("n", "<leader><leader>c", function()
     theme_picker.apply_themes(colors)
 end, { desc = "COLORS" })
 
-
-vim.keymap.set("n", "<leader>tf", function()
+vim.keymap.set("n", "<leader>at", function()
     local ext = vim.fn.expand("%:e")
-    if ext == "go" then
-        local file = vim.fn.expand("%:p:r") .. "_test.go"
-        print("Opening: " .. file)
-        vim.cmd("e " .. file)
-    else
-        print "Not a .go file..."
+    if ext ~= "go" then
+        return print("Not a go file...")
     end
-end, { desc = "Open correspndong test file" })
+
+    local file = vim.fn.expand("%:p:r")
+    local is_test_file = string.match(file, "_test$")
+
+    local target_file = file .. "_test.go"
+    if is_test_file then
+        target_file = string.gsub(file, "_test$", ".go")
+    end
+
+    if vim.fn.filereadable(target_file) == 1 then
+        local file_path = vim.split(target_file, "/")
+        print("Opening -> " .. file_path[#file_path])
+        vim.cmd("e " .. target_file)
+    else
+        print("File does not exist: " .. target_file)
+    end
+end, { desc = "Alternate Test: for go projects" })

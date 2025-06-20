@@ -23,14 +23,14 @@ return {
     },
 
     -- Configure the lua_ls for the vim api
-    { "folke/neodev.nvim" },
+    { "folke/lazydev.nvim" },
 
     -- nvim-lspconfig: Used by lsp startup config
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
         config = function()
-            require("neodev").setup()
+            require("lazydev").setup()
 
             local lspconfig = require("lspconfig")
             local util = require("lspconfig.util")
@@ -39,6 +39,8 @@ return {
             -- By specifying the LSP method, handler = {["textDocument/method"] = function() ... end}
             -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
+
+            lspconfig.arduino_language_server.setup({})
 
             lspconfig.clangd.setup({})
             lspconfig.lua_ls.setup({})
