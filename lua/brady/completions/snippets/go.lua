@@ -1,6 +1,3 @@
--------------
--- Go snipptes
---------------
 local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 

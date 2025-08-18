@@ -22,8 +22,8 @@ vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>source %<CR>", { desc =
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Exec line" })
 vim.keymap.set("v", "<leader>x", ":lua<CR>", { desc = "Exec visual selection" })
 
-vim.keymap.set("x", "<leader>vp", '"_dP', { desc = "Void: Paste" })
-vim.keymap.set("x", "<leader>vd", '"_d', { desc = "Void: Delete" })
+vim.keymap.set("x", "<leader>vp", '"_dP', { desc = "Void Paste" })
+vim.keymap.set("x", "<leader>vd", '"_d', { desc = "Void Delete" })
 
 vim.keymap.set('n', '<leader>nh', '<cmd>nohlsearch<CR>', { desc = "No Highlight" })
 vim.keymap.set('n', '<leader>sp', "<cmd>lua vim.opt.spell = not vim.opt.spell:get()<CR>", { desc = "Toggle spelling" })

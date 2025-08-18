@@ -1,8 +1,3 @@
----@diagnostic disable: missing-fields
-
---------------------------
--- DAP Config
---------------------------
 return {
     {
         "mfussenegger/nvim-dap",
@@ -53,11 +48,11 @@ return {
             vim.keymap.set("n", "<leader>su", dap.step_out, { desc = "Dap: StepOut" })
             vim.keymap.set("n", "<leader>cb", dap.clear_breakpoints, { desc = "Dap: ClearBreakpoints" })
             vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint, { desc = "Dap: ToggleBreakpoint" })
+            vim.keymap.set("n", "<leader>dq", dap.terminate, { desc = "Dap: Quit" })
             vim.keymap.set("n", "<leader>dr", function()
                 dap.repl.toggle()
                 vim.api.nvim_input("<C-w>ji") -- move to repl window
-            end
-            , { desc = "Dap: ToggleRepl" })
+            end, { desc = "Dap: ToggleRepl" })
 
             vim.keymap.set("n", "<leader>B", function()
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
@@ -148,6 +143,7 @@ return {
                     },
                     {
                         name = "Attach to process",
+                        port = 9229,
                         type = "pwa-node",
                         request = "attach",
                         processId = require('dap.utils').pick_process,

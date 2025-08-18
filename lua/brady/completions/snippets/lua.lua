@@ -1,9 +1,3 @@
--------------
--- Add custom snippets to luasnip
--- Uses the same LuaSnip source for nvim-cmp
--- We just insert our own snippets here...
---------------
-
 local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 
