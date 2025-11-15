@@ -1,6 +1,3 @@
---------------------------
--- LSP Config
---------------------------
 return {
     {
         "williamboman/mason.nvim",
@@ -25,61 +22,54 @@ return {
     -- Configure the lua_ls for the vim api
     { "folke/lazydev.nvim" },
 
-    -- nvim-lspconfig: Used by lsp startup config
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
         config = function()
             require("lazydev").setup()
 
-            local lspconfig = require("lspconfig")
-            local util = require("lspconfig.util")
-
             -- Can define custom 'handlers' when configuring each LS
             -- By specifying the LSP method, handler = {["textDocument/method"] = function() ... end}
             -- This handler will be invoked once the LS sends its response
             -- This will configure the handler for the lsp-method for just the given server
 
-            lspconfig.arduino_language_server.setup({})
+            vim.lsp.enable("lua_ls")
+            vim.lsp.enable("clangd")
+            vim.lsp.enable("ts_ls")
+            vim.lsp.enable("jsonls")
+            vim.lsp.enable("pylsp")
+            vim.lsp.enable("bashls")
+            vim.lsp.enable("dockerls")
+            vim.lsp.enable("cssls")
+            vim.lsp.enable("html")
 
-            lspconfig.clangd.setup({})
-            lspconfig.lua_ls.setup({})
-            lspconfig.ts_ls.setup({})
-            lspconfig.jsonls.setup({})
-            lspconfig.pylsp.setup({})
-            lspconfig.bashls.setup({})
-            lspconfig.dockerls.setup({})
-            lspconfig.volar.setup {
-                filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-                init_options = {
-                    vue = {
-                        hybridMode = false,
-                    },
-                },
-            }
+            -- lspconfig.volar.setup {
+            --     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+            --     init_options = {
+            --         vue = {
+            --             hybridMode = false,
+            --         },
+            --     },
+            -- }
 
-            lspconfig.cssls.setup({})
-            lspconfig.html.setup({
-                filetypes = { "html", "template" }
-            })
-
-            lspconfig.gopls.setup {
-                -- on_attach = lspconfig.on_attach,
-                -- add in the nvim-cmp completion ca[ability]
-                -- capabilities = lspconfig.capabilities,
-                cmd = { "gopls" },
-                filetypes = { "go", "gomod", "gowork", "gotmpl" },
-                root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-                settings = {
-                    gopls = {
-                        completeUnimported = true,
-                        usePlaceholders = true,
-                        analyses = {
-                            unusedparams = true,
-                        },
-                    },
-                },
-            }
+            --
+            -- lspconfig.gopls.setup {
+            --     -- on_attach = lspconfig.on_attach,
+            --     -- add in the nvim-cmp completion ca[ability]
+            --     -- capabilities = lspconfig.capabilities,
+            --     cmd = { "gopls" },
+            --     filetypes = { "go", "gomod", "gowork", "gotmpl" },
+            --     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+            --     settings = {
+            --         gopls = {
+            --             completeUnimported = true,
+            --             usePlaceholders = true,
+            --             analyses = {
+            --                 unusedparams = true,
+            --             },
+            --         },
+            --     },
+            -- }
 
 
             vim.api.nvim_create_autocmd("LspAttach", {
