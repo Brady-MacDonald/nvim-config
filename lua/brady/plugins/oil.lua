@@ -9,6 +9,7 @@ return {
             skip_confirm_for_simple_edits = true,
             float = {
                 padding = 3,
+                border = "rounded"
             },
             view_options = {
                 show_hidden = true,
