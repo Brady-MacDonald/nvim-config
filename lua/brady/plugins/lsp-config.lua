@@ -6,10 +6,6 @@ return {
             require("mason").setup()
         end
     },
-
-    -- Mason-LspConfig: bridge between mason.nvim <-> nvim-lspconfig
-    -- Allows to set default LSP's to always have installed (config as code)
-    -- Name of language server must be agreed upon mason and lspconfig
     {
         "williamboman/mason-lspconfig.nvim",
         config = function()
@@ -18,10 +14,9 @@ return {
             }
         end
     },
-
-    -- Configure the lua_ls for the vim api
-    { "folke/lazydev.nvim" },
-
+    {
+        "folke/lazydev.nvim"
+    },
     {
         "neovim/nvim-lspconfig",
         event = "VeryLazy",
@@ -43,53 +38,12 @@ return {
             vim.lsp.enable("cssls")
             vim.lsp.enable("html")
 
-            -- lspconfig.volar.setup {
-            --     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-            --     init_options = {
-            --         vue = {
-            --             hybridMode = false,
-            --         },
-            --     },
-            -- }
-
-            --
-            -- lspconfig.gopls.setup {
-            --     -- on_attach = lspconfig.on_attach,
-            --     -- add in the nvim-cmp completion ca[ability]
-            --     -- capabilities = lspconfig.capabilities,
-            --     cmd = { "gopls" },
-            --     filetypes = { "go", "gomod", "gowork", "gotmpl" },
-            --     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-            --     settings = {
-            --         gopls = {
-            --             completeUnimported = true,
-            --             usePlaceholders = true,
-            --             analyses = {
-            --                 unusedparams = true,
-            --             },
-            --         },
-            --     },
-            -- }
-
-
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
                 group = vim.api.nvim_create_augroup("LspKeymaps", {}),
                 callback = function()
-                    -- Defaults in nvim 0.11
-                    vim.keymap.set('n', 'grn', vim.lsp.buf.rename,
-                        { desc = "LSP: textDocument/rename", buffer = 0 })
-                    vim.keymap.set('n', 'grr', vim.lsp.buf.references,
-                        { desc = "LSP: textDocument/references", buffer = 0 })
-                    vim.keymap.set('n', 'gra', vim.lsp.buf.code_action,
-                        { desc = "LSP: textDocument/codeactions", buffer = 0 })
-                    vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help,
-                        { desc = "LSP: textDocument/signatureHelp", buffer = 0 })
-
                     vim.keymap.set('i', '<C-h>', vim.lsp.buf.code_action,
                         { desc = "LSP: textDocument/codeactions", buffer = 0 })
-                    vim.keymap.set('n', '<S-k>', vim.lsp.buf.hover,
-                        { desc = "LSP: textDocument/hover", buffer = 0 })
                     vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition,
                         { desc = "LSP: textDocument/definition", buffer = 0 })
                     vim.keymap.set('n', '<leader>gt', vim.lsp.buf.type_definition,
