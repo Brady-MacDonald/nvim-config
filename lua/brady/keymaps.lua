@@ -9,14 +9,8 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<leader>o', 'o<escape>')
 vim.keymap.set('n', '<leader>O', 'O<escape>')
 
--- Control the size of splits (height/width)
 vim.keymap.set("n", "<C-w>,", "<c-w>5<")
 vim.keymap.set("n", "<C-w>.", "<c-w>5>")
-
--- vim.keymap.set("n", "<M-,>", "<c-w>5<")
--- vim.keymap.set("n", "<M-.>", "<c-w>5>")
--- vim.keymap.set("n", "<M-t>", "<C-W>+")
--- vim.keymap.set("n", "<M-s>", "<C-W>-")
 
 vim.keymap.set("n", "<leader><leader>x", "<cmd>w<CR><cmd>source %<CR>", { desc = "Exec file" })
 vim.keymap.set("n", "<leader>x", ":.lua<CR>", { desc = "Exec line" })

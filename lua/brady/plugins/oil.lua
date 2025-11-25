@@ -1,12 +1,15 @@
 return {
     'stevearc/oil.nvim',
     event = "VeryLazy",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { { "nvim-mini/mini.icons", opts = {} } },
     config = function()
         local oil = require("oil")
         oil.setup({
             default_file_explorer = true,
             skip_confirm_for_simple_edits = true,
+            confirmation = {
+                border = "rounded"
+            },
             float = {
                 padding = 3,
                 border = "rounded"
