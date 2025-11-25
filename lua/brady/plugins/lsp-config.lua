@@ -81,16 +81,5 @@ return {
                 end
             })
         end
-    },
-    {
-        "jmederosalvarado/roslyn.nvim",
-        event = "VeryLazy",
-        config = function()
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            require("roslyn").setup({
-                capabilities = capabilities,
-                on_attach = function() end,
-            })
-        end
     }
 }

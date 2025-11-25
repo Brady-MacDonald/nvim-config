@@ -112,6 +112,12 @@ return {
     -- Language Specific Debuggers
     -------------------------------
     {
+        "mfussenegger/nvim-dap-python",
+        config = function()
+            require("dap-python").setup("python3")
+        end
+    },
+    {
         "leoluz/nvim-dap-go",
         config = function()
             -- Sets up nvim-dap configuration for Delve
