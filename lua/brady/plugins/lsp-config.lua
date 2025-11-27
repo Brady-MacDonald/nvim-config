@@ -23,13 +23,9 @@ return {
         config = function()
             require("lazydev").setup()
 
-            -- Can define custom 'handlers' when configuring each LS
-            -- By specifying the LSP method, handler = {["textDocument/method"] = function() ... end}
-            -- This handler will be invoked once the LS sends its response
-            -- This will configure the handler for the lsp-method for just the given server
-
             vim.lsp.enable("lua_ls")
             vim.lsp.enable("clangd")
+            vim.lsp.enable("gopls")
             vim.lsp.enable("ts_ls")
             vim.lsp.enable("jsonls")
             vim.lsp.enable("pylsp")
@@ -37,6 +33,12 @@ return {
             vim.lsp.enable("dockerls")
             vim.lsp.enable("cssls")
             vim.lsp.enable("html")
+
+            vim.diagnostic.config({
+                float = {
+                    border = "rounded"
+                },
+            })
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
