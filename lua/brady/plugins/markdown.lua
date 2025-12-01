@@ -5,6 +5,7 @@ return {
     config = function()
         local render_markdown = require("render-markdown")
         render_markdown.setup({
+            latex = { enabled = false },
             completions = { lsp = { enabled = true } }
         })
     end

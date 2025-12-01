@@ -6,9 +6,6 @@ vim.keymap.set("t", "<C-w>c", "<C-\\><C-n><C-w>c<C-w>l")
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 
-vim.keymap.set('n', '<leader>o', 'o<escape>')
-vim.keymap.set('n', '<leader>O', 'O<escape>')
-
 vim.keymap.set("n", "<C-w>,", "<c-w>5<")
 vim.keymap.set("n", "<C-w>.", "<c-w>5>")
 
@@ -46,7 +43,7 @@ vim.keymap.set('n', '<leader>cd', function()
         elseif ft == "typescript" or ft == "javascript" then
             return root.root_pattern(".git", "package.json")
 
-            -- Check for .git directory
+            -- TODO: Check for .git directory
         else
             vim.notify("No root dir found for filetype: " .. ft)
         end
@@ -78,14 +75,6 @@ vim.keymap.set("n", "<leader>dd", function()
     local diag = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not diag)
 end, { desc = "Diagnostics: Toggle" })
-
-vim.keymap.set("n", "<leader><leader>sbr", function()
-    require("sbr").setup()
-end, { desc = "Set up SBR config" })
-
-vim.keymap.set("n", "<leader><leader>mo", function()
-    require("brady.monk").setup()
-end, { desc = "Set up Monk LSP" })
 
 vim.keymap.set("n", "<leader><leader>c", function()
     local color_scheme = vim.fn.input("Colorscheme: ")

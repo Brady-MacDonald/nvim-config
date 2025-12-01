@@ -10,7 +10,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup {
-                ensure_installed = { "clangd", "lua_ls", "gopls" },
+                ensure_installed = { "lua_ls" },
             }
         end
     },
@@ -28,17 +28,11 @@ return {
             vim.lsp.enable("gopls")
             vim.lsp.enable("ts_ls")
             vim.lsp.enable("jsonls")
-            vim.lsp.enable("pylsp")
+            vim.lsp.enable("pyright")
             vim.lsp.enable("bashls")
             vim.lsp.enable("dockerls")
             vim.lsp.enable("cssls")
             vim.lsp.enable("html")
-
-            vim.diagnostic.config({
-                float = {
-                    border = "rounded"
-                },
-            })
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
