@@ -23,16 +23,23 @@ return {
         config = function()
             require("lazydev").setup()
 
-            vim.lsp.enable("lua_ls")
-            vim.lsp.enable("clangd")
-            vim.lsp.enable("gopls")
-            vim.lsp.enable("ts_ls")
-            vim.lsp.enable("jsonls")
-            vim.lsp.enable("pyright")
-            vim.lsp.enable("bashls")
-            vim.lsp.enable("dockerls")
-            vim.lsp.enable("cssls")
-            vim.lsp.enable("html")
+            vim.lsp.enable({
+                "lua_ls",
+                "clangd",
+                "gopls",
+                "ts_ls",
+                "jsonls",
+                "pyright",
+                "bashls",
+                "dockerls",
+                "cssls",
+                "html",
+            })
+
+            local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+            -- local lspconfig = require('lspconfig')
+            -- lspconfig['lua_ls'].setup({ capabilities = capabilities })
 
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",

@@ -106,6 +106,7 @@ return {
     -------------------------------
     -- Language Specific Debuggers
     -------------------------------
+
     {
         "mfussenegger/nvim-dap-python",
         config = function()
