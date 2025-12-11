@@ -19,7 +19,4 @@ return {
             require("colorizer").setup()
         end
     },
-    {
-        "HiPhish/rainbow-delimiters.nvim"
-    }
 }

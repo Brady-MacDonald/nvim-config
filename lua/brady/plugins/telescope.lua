@@ -19,12 +19,13 @@ return {
             local h_pct = 0.90
             local w_pct = 0.80
             local w_limit = 75
-            local standard_setup = {
+
+            local spell_setup = {
                 borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 preview = { hide_on_startup = true },
                 layout_strategy = 'vertical',
                 sorting_strategy = "ascending",
-                prompt_prefix = "config   ",
+                prompt_prefix = "search   ",
                 prompt_title = "Search Config",
                 layout_config = {
                     vertical = {
@@ -41,7 +42,7 @@ return {
                     },
                 },
             }
-            local fullscreen_setup = {
+            local ff_setup = {
                 borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 preview = { hide_on_startup = false },
                 layout_strategy = 'flex',
@@ -89,10 +90,10 @@ return {
             vim.keymap.set("n", "<leader>gt", builtin.git_stash, { desc = "Telescope: GitStash" })
             vim.keymap.set("n", "<leader>gbc", builtin.git_bcommits, { desc = "Telescope: GitBufferCommits" })
             vim.keymap.set("n", "<leader>gcc", builtin.git_bcommits, { desc = "Telescope: GitCommits" })
-            vim.keymap.set("n", "z=", function() builtin.spell_suggest(standard_setup) end,
+            vim.keymap.set("n", "z=", function() builtin.spell_suggest(spell_setup) end,
                 { desc = "Telescope: SpellSuggest" })
 
-            vim.keymap.set("n", "<leader>ff", function() builtin.find_files(fullscreen_setup) end,
+            vim.keymap.set("n", "<leader>ff", function() builtin.find_files(ff_setup) end,
                 { desc = "Telescope: FindFiles" })
 
             vim.keymap.set("n", "<leader>lg", function() builtin.live_grep(ivy) end, { desc = "Telescope: LiveGrep" })
@@ -100,19 +101,6 @@ return {
                 { desc = "Telescope: StringGrep" })
             vim.keymap.set("n", "<leader>bg", function() builtin.current_buffer_fuzzy_find(ivy) end,
                 { desc = "Telescope: BufferGrep" })
-
-            local config_opts = {
-                search_dirs = { "~/.config/nvim" },
-                prompt_prefix = "config   ",
-                prompt_title = "Search Config"
-            }
-
-            local ivy_config = vim.tbl_extend("force", ivy, config_opts)
-            local grep_config = function() builtin.live_grep(ivy) end
-            local find_config = function() builtin.find_files(ivy_config) end
-
-            vim.keymap.set("n", "<leader>gc", grep_config, { desc = "Telescope: GrepConfig" })
-            vim.keymap.set("n", "<leader>fc", find_config, { desc = "Telescope: FindConfig" })
         end
     },
     {

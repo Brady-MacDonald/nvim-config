@@ -16,6 +16,7 @@ return {
         'saghen/blink.cmp',
         dependencies = { 'rafamadriz/friendly-snippets' },
         version = '1.*',
+        event = "InsertEnter",
         config = function()
             local blink = require('blink.cmp')
 
@@ -28,7 +29,7 @@ return {
                 -- See :h blink-cmp-config-keymap for defining your own keymap
                 keymap = {
                     preset = 'default',
-                    ['<C-k>'] = { 'select_and_accept', 'fallback' },
+                    ['<C-k>'] = { 'accept', 'fallback' },
                     ['<C-j>'] = { 'show_signature', 'hide_signature', 'fallback' },
                 },
 

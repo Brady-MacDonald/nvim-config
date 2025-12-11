@@ -1,5 +1,8 @@
 -- Global Functions
 
+---Global function to print vim.inspect() info
+---@param t any
+---@return any
 P = function(t)
     print(vim.inspect(t))
     return t
