@@ -38,6 +38,7 @@ return {
                 local sufWidth = vim.fn.strdisplaywidth(suffix)
                 local targetWidth = width - sufWidth
                 local curWidth = 0
+
                 for _, chunk in ipairs(virtText) do
                     local chunkText = chunk[1]
                     local chunkWidth = vim.fn.strdisplaywidth(chunkText)
@@ -56,6 +57,7 @@ return {
                     end
                     curWidth = curWidth + chunkWidth
                 end
+
                 table.insert(newVirtText, { suffix, 'MoreMsg' })
                 return newVirtText
             end

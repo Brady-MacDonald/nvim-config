@@ -62,9 +62,9 @@ end, { desc = "cd into project root" })
 vim.keymap.set("n", "<leader>df", function()
     local format = vim.g.format
     if format then
-        vim.notify("Disabled: Formatting on save")
+        vim.notify("Disabled -> Formatting on save")
     else
-        vim.notify("Enabled: Formatting on save")
+        vim.notify("Enabled -> Formatting on save")
     end
 
     vim.g.format = not format
@@ -75,13 +75,6 @@ vim.keymap.set("n", "<leader>dd", function()
     local diag = vim.diagnostic.is_enabled()
     vim.diagnostic.enable(not diag)
 end, { desc = "Diagnostics: Toggle" })
-
-vim.keymap.set("n", "<leader><leader>c", function()
-    local color_scheme = vim.fn.input("Colorscheme: ")
-    local theme_picker = require("brady.themes")
-    local colors = theme_picker.get_theme(color_scheme)
-    theme_picker.apply_themes(colors)
-end, { desc = "COLORS" })
 
 vim.keymap.set("n", "<leader>at", function()
     local ext = vim.fn.expand("%:e")

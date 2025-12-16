@@ -7,12 +7,8 @@ return {
         oil.setup({
             default_file_explorer = true,
             skip_confirm_for_simple_edits = true,
-            confirmation = {
-                border = "rounded"
-            },
             float = {
                 padding = 3,
-                border = "rounded"
             },
             view_options = {
                 show_hidden = true,

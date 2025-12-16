@@ -38,11 +38,6 @@ return {
                 "html",
             })
 
-            local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-            -- local lspconfig = require('lspconfig')
-            -- lspconfig['lua_ls'].setup({ capabilities = capabilities })
-
             vim.api.nvim_create_autocmd("LspAttach", {
                 desc = "Create buffer scoped LSP keymaps when LSP attaches to buffer",
                 group = vim.api.nvim_create_augroup("LspKeymaps", {}),
