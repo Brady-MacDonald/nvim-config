@@ -1,6 +1,7 @@
 return {
     {
         "mfussenegger/nvim-dap",
+        event = "VeryLazy",
         config = function()
             local dap = require("dap")
 
@@ -58,10 +59,6 @@ return {
                 dap.toggle_breakpoint(vim.fn.input("Breakpoint Condition: "))
             end, { desc = "Dap: ConditionalBreakpoint" })
 
-            vim.keymap.set('n', '<leader>df', function()
-                dap_widgets.centered_float(dap_widgets.frames)
-            end)
-
             vim.keymap.set('n', '<leader>ds', function()
                 dap_widgets.centered_float(dap_widgets.scopes)
             end)
@@ -70,6 +67,7 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = { "nvim-neotest/nvim-nio" },
+        event = "UIEnter",
         config = function()
             local dapui = require("dapui")
             dapui.setup({
@@ -98,7 +96,7 @@ return {
             vim.keymap.set("n", "<leader>do", dapui.open, { desc = "DapUI: Debugger Open" })
             vim.keymap.set("n", "<leader>dc", dapui.close, { desc = "DapUI: Debugger Close" })
             vim.keymap.set("n", "<leader>dt", dapui.toggle, { desc = "DapUI: Debugger Toggle" })
-            vim.keymap.set("n", "<leader>df", dapui.float_element, { desc = "DapUI: Float Element" })
+            vim.keymap.set("n", "<leader>dg", dapui.float_element, { desc = "DapUI: Float Element" })
             vim.keymap.set("n", "<leader>dv", dapui.eval, { desc = "DapUI: Eval" })
         end
     },
@@ -109,12 +107,14 @@ return {
 
     {
         "mfussenegger/nvim-dap-python",
+        event = "VeryLazy",
         config = function()
             require("dap-python").setup("python3")
         end
     },
     {
         "leoluz/nvim-dap-go",
+        event = "VeryLazy",
         config = function()
             -- Sets up nvim-dap configuration for Delve
             local dap_go = require("dap-go")
@@ -126,6 +126,7 @@ return {
     },
     {
         "mxsdev/nvim-dap-vscode-js",
+        event = "VeryLazy",
         dependencies = {
             "microsoft/vscode-js-debug", -- JS debugger to be installed through Mason
             build = "npm i && npm run compile vsDebugServerBundle && rm -rf out && mv dist out",

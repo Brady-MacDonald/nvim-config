@@ -31,6 +31,7 @@ vim.filetype.add({
     filename = {
         [".env"] = "sh",
         ["env"] = "sh",
+        ["config"] = "sh",
     },
 
     -- Pattern matching for filetype

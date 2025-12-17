@@ -2,6 +2,7 @@ return {
     'saghen/blink.pairs',
     version = '*',
     dependencies = 'saghen/blink.download',
+    event = "BufReadPre",
     opts = {
         mappings = {
             -- you can call require("blink.pairs.mappings").enable()

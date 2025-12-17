@@ -1,6 +1,7 @@
 return {
     {
         'nvim-telescope/telescope.nvim',
+        event = "VeryLazy",
         dependencies = { 'nvim-lua/plenary.nvim' },
         config = function()
             local builtin = require("telescope.builtin")
@@ -26,7 +27,7 @@ return {
                 layout_strategy = 'vertical',
                 sorting_strategy = "ascending",
                 prompt_prefix = "search   ",
-                prompt_title = "Search Config",
+                prompt_title = "Spelling",
                 layout_config = {
                     vertical = {
                         mirror = true,
@@ -105,6 +106,7 @@ return {
     },
     {
         "nvim-telescope/telescope-ui-select.nvim",
+        event = "UIEnter",
         config = function()
             local telescope = require("telescope")
             local themes = require("telescope.themes")
