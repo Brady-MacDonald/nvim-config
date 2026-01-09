@@ -49,8 +49,6 @@ return {
                         { desc = "LSP: textDocument/typeDefinition", buffer = 0 })
                     vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation,
                         { desc = "LSP: textDocument/implementation", buffer = 0 })
-                    vim.keymap.set('n', '<leader>fm', vim.lsp.buf.format,
-                        { desc = "LSP: textDocument/formatting", buffer = 0 })
 
                     -- Telescope LSP commands
                     local telescope_builtin = require("telescope.builtin")
@@ -64,19 +62,6 @@ return {
                         { desc = "Telescope: workSpace/dynamic_symbols", buffer = 0 })
                     vim.keymap.set("n", "<leader>ls", telescope_builtin.lsp_workspace_symbols,
                         { desc = "Telescope: workSpace/symbols", buffer = 0 })
-
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        desc = "textDocument/formatting Request on BufWritePre",
-                        group = vim.api.nvim_create_augroup("LspFormatPreWrite", {}),
-                        callback = function(ev)
-                            local format = vim.g.format
-
-                            local buf_clients = vim.lsp.get_clients({ bufnr = ev.buf })
-                            if format and #buf_clients ~= 0 and buf_clients[1].server_capabilities.documentFormattingProvider then
-                                vim.lsp.buf.format()
-                            end
-                        end
-                    })
                 end
             })
         end

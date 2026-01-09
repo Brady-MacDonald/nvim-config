@@ -21,7 +21,7 @@ end
 vim.filetype.add({
     -- Assign filetype based on the extension
     extension = {
-        mdx = "mdx",
+        mdx = "markdown",
         log = "log",
         conf = "conf",
         monk = "monk",
