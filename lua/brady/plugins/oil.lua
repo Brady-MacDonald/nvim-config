@@ -16,7 +16,7 @@ return {
         })
 
         vim.keymap.set("n", "<leader>ef", oil.open_float, { desc = "Oil: Float" })
+        vim.keymap.set("n", "<leader>ep", function() oil.open_float(vim.fn.getcwd()) end, { desc = "Oil: Pwd" })
         vim.keymap.set("n", "<leader>ew", oil.open, { desc = "Oil: Open" })
-        vim.keymap.set("n", "<leader>ep", function() oil.open(vim.fn.getcwd()) end, { desc = "Oil: Pwd" })
     end
 }

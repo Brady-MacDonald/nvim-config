@@ -4,42 +4,6 @@ return {
         event = "VeryLazy",
         config = function()
             local dap = require("dap")
-
-            dap.adapters.cppdbg = {
-                id = 'cppdbg',
-                type = 'executable',
-                command = '/home/bmacdonald/.local/share/nvim/mason/bin/OpenDebugAD7',
-            }
-
-            dap.configurations.cpp = {
-                {
-                    name = "Launch Executable",
-                    type = "cppdbg",
-                    request = "launch",
-                    program = function()
-                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-                    end,
-                    cwd = '${workspaceFolder}',
-                    stopAtEntry = true,
-                },
-                {
-                    name = 'Attach to gdbserver :1234',
-                    type = 'cppdbg',
-                    request = 'launch',
-                    MIMode = 'gdb',
-                    miDebuggerServerAddress = 'localhost:1234',
-                    miDebuggerPath = '/usr/bin/gdb',
-                    cwd = '${workspaceFolder}',
-                    program = function()
-                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-                    end,
-                },
-            }
-
-            dap.configurations.c = dap.configurations.cpp
-            dap.configurations.rust = dap.configurations.cpp
-
-            -- local dap_utils = require("dap.utils")
             local dap_widgets = require("dap.ui.widgets")
 
             vim.keymap.set("n", "<leader>cc", dap.continue, { desc = "Dap: Continue" })
@@ -70,6 +34,7 @@ return {
         event = "UIEnter",
         config = function()
             local dapui = require("dapui")
+            ---@diagnostic disable-next-line: missing-fields
             dapui.setup({
                 force_buffers = true,
                 layouts = {
@@ -106,17 +71,16 @@ return {
     -------------------------------
 
     {
-        "mfussenegger/nvim-dap-python",
+        "mfussenegger/nvim-dap-python", -- python-debugpy
         event = "VeryLazy",
         config = function()
             require("dap-python").setup("python3")
         end
     },
     {
-        "leoluz/nvim-dap-go",
+        "leoluz/nvim-dap-go", -- delve
         event = "VeryLazy",
         config = function()
-            -- Sets up nvim-dap configuration for Delve
             local dap_go = require("dap-go")
             dap_go.setup()
 
@@ -127,50 +91,116 @@ return {
     {
         "mxsdev/nvim-dap-vscode-js",
         event = "VeryLazy",
-        dependencies = {
-            "microsoft/vscode-js-debug", -- JS debugger to be installed through Mason
-            build = "npm i && npm run compile vsDebugServerBundle && rm -rf out && mv dist out",
-        },
         config = function()
             local dap = require("dap")
             local dap_node = require("dap-vscode-js")
 
-            for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
-                dap.configurations[language] = {
-                    {
-                        name = "Launch file",
-                        type = "pwa-node",
-                        request = "launch",
-                        program = "${file}",
-                        cwd = "${workspaceFolder}",
-                    },
-                    {
-                        name = "Attach to process",
-                        port = 9229,
-                        type = "pwa-node",
-                        request = "attach",
-                        processId = require('dap.utils').pick_process,
-                        cwd = "${workspaceFolder}",
-                    },
-                    {
-                        name = "Auto Attach",
-                        type = "pwa-node",
-                        request = "attach",
-                        cwd = vim.fn.getcwd()
-                    },
-                    {
-                        name = "Start Chrome with \"localhost:3000\"",
-                        type = "pwa-chrome",
-                        url = "http://localhost:3000",
-                        request = "launch",
-                        webRoot = "${workspaceFolder}",
-                        userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+            for _, adapterType in ipairs({ "node", "chrome", "msedge" }) do
+                local pwaType = "pwa-" .. adapterType
+
+                if not dap.adapters[pwaType] then
+                    dap.adapters[pwaType] = {
+                        type = "server",
+                        host = "localhost",
+                        port = "${port}",
+                        executable = {
+                            command = "js-debug-adapter",
+                            args = { "${port}" },
+                        },
                     }
-                }
+                end
             end
 
+            local js_filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" }
+
+            local vscode = require("dap.ext.vscode")
+            vscode.type_to_filetypes["node"] = js_filetypes
+            vscode.type_to_filetypes["pwa-node"] = js_filetypes
+
+            for _, language in ipairs(js_filetypes) do
+                if not dap.configurations[language] then
+                    local runtimeExecutable = nil
+                    if language:find("typescript") then
+                        runtimeExecutable = vim.fn.executable("tsx") == 1 and "tsx" or "ts-node"
+                    end
+                    dap.configurations[language] = {
+                        {
+                            type = "pwa-node",
+                            request = "launch",
+                            name = "Launch file",
+                            program = "${file}",
+                            cwd = "${workspaceFolder}",
+                            sourceMaps = true,
+                            runtimeExecutable = runtimeExecutable,
+                            skipFiles = {
+                                "<node_internals>/**",
+                                "node_modules/**",
+                            },
+                            resolveSourceMapLocations = {
+                                "${workspaceFolder}/**",
+                                "!**/node_modules/**",
+                            },
+                        },
+                        {
+                            type = "pwa-node",
+                            request = "attach",
+                            name = "Attach",
+                            processId = require("dap.utils").pick_process,
+                            cwd = "${workspaceFolder}",
+                            sourceMaps = true,
+                            runtimeExecutable = runtimeExecutable,
+                            skipFiles = {
+                                "<node_internals>/**",
+                                "node_modules/**",
+                            },
+                            resolveSourceMapLocations = {
+                                "${workspaceFolder}/**",
+                                "!**/node_modules/**",
+                            },
+                        },
+                    }
+                end
+            end
+
+            -- for _, language in ipairs({ "typescript", "javascript", "typescriptreact" }) do
+            --     dap.configurations[language] = {
+            --         {
+            --             name = "Launch file",
+            --             type = "pwa-node",
+            --             request = "launch",
+            --             program = "${file}",
+            --             port = "${port}",
+            --             cwd = "${workspaceFolder}",
+            --         },
+            --         {
+            --             name = "Attach to process",
+            --             port = "${port}",
+            --             type = "pwa-node",
+            --             request = "attach",
+            --             processId = require('dap.utils').pick_process,
+            --             cwd = "${workspaceFolder}",
+            --         },
+            --         {
+            --             name = "Auto Attach",
+            --             type = "pwa-node",
+            --             port = "${port}",
+            --             request = "attach",
+            --             cwd = vim.fn.getcwd()
+            --         },
+            --         {
+            --             name = "Start Chrome with \"localhost:3000\"",
+            --             type = "pwa-chrome",
+            --             url = "http://localhost:3000",
+            --             port = "${port}",
+            --             request = "launch",
+            --             webRoot = "${workspaceFolder}",
+            --             userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir"
+            --         }
+            --     }
+            -- end
+
             dap_node.setup({
-                debugger_path = vim.fn.stdpath('data') .. "/lazy/vscode-js-debug",
+                debugger_path = "/home/bmacdonald/source/vscode-js-debug",
                 adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
             })
         end
