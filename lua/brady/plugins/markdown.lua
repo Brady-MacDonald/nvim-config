@@ -1,7 +1,7 @@
 return {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = "markdown",
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },
     config = function()
         local render_markdown = require("render-markdown")
         render_markdown.setup({

@@ -24,11 +24,11 @@ return {
         "sindrets/diffview.nvim",
         dependencies = { "nvim-lua/plenary.nvim", },
         config = function()
-            vim.keymap.set("n", "<cmd>DiffviewOpen<cr>", "<leader>gdo", { desc = "GitDiffOpen" })
-            vim.keymap.set("n", "<cmd>DiffviewClose<cr>", "<leader>gdc", { desc = "GitDiffClose" })
-            -- <leader>vh", "<cmd>DiffviewFileHistory<cr>", desc = "Diffview: File history" },
-
             require("diffview").setup()
+
+            vim.keymap.set("n", "<leader>gdo", "<cmd>DiffviewOpen<CR>", { desc = "GitDiff: Open" })
+            vim.keymap.set("n", "<leader>gdc", "<cmd>DiffviewClose<CR>", { desc = "GitDiff: Close" })
+            vim.keymap.set("n", "<leader>gdh", "<cmd>DiffviewFileHistory<cr>", { desc = "GitDiff: History" })
         end,
     }
 }

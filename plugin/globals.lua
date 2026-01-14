@@ -41,11 +41,22 @@ vim.filetype.add({
     },
 })
 
-vim.api.nvim_create_autocmd("filetype", {
-    group = vim.api.nvim_create_augroup("VueCommentString", {}),
-    desc = "Comment string for Vue files",
-    pattern = "vue",
-    callback = function()
-        vim.bo.commentstring = "<!-- %s -->"
+-- Enforce transparency for status line highlight groups
+Transparent_statusline = function()
+    local groups = { "StatusLine", "StatusLineNC", "WinBar", "WinBarNC", }
+    for _, hl in ipairs(groups) do
+        vim.api.nvim_set_hl(0, hl, { bg = "NONE" })
     end
+
+    for _, mode in ipairs({ "normal", "insert", "visual", "replace", "command", "inactive", }) do
+        for _, section in ipairs({ "a", "b", "c" }) do
+            vim.api.nvim_set_hl(0, string.format("lualine_%s_%s", section, mode), { bg = "NONE" })
+        end
+    end
+end
+
+Transparent_statusline()
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = Transparent_statusline,
 })
