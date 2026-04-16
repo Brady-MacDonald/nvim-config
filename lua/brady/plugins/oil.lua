@@ -4,11 +4,12 @@ return {
     dependencies = { { "nvim-mini/mini.icons", opts = {} } },
     config = function()
         local oil = require("oil")
+
         oil.setup({
             default_file_explorer = true,
             skip_confirm_for_simple_edits = true,
             float = {
-                padding = 3,
+                padding = 5,
             },
             view_options = {
                 show_hidden = true,

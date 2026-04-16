@@ -23,6 +23,7 @@ return {
     {
         "sindrets/diffview.nvim",
         dependencies = { "nvim-lua/plenary.nvim", },
+        event = "BufReadPre",
         config = function()
             require("diffview").setup()
 
