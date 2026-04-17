@@ -204,5 +204,8 @@ return {
                 adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
             })
         end
-    }
+    },
+    -- C# debugging with netcoredbg
+    -- Install: Mason or download from https://github.com/Samsung/netcoredbg/releases
+    -- The csharp.nvim plugin will configure the adapter automatically
 }

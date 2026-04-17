@@ -145,3 +145,7 @@ return {
 - **TypeScript/React**: 2-space indent, ts_ls LSP
 - **Go**: gopls LSP, test navigation, custom snippets
 - **Lua**: lua_ls with lazydev.nvim for Neovim API completions
+- **C#**: omnisharp LSP, c_sharp treesitter, csharp.nvim plugin for enhanced features
+  - Razor/CSHTML: vim-razor for syntax, custom commentstring `@* %s *@`
+  - DAP: netcoredbg (install via Mason or from https://github.com/Samsung/netcoredbg/releases)
+  - 4-space indentation (ftplugin/cs.lua)

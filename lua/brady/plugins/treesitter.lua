@@ -15,13 +15,15 @@ return {
     config = function()
         ---@diagnostic disable-next-line: missing-fields
         require 'nvim-treesitter.configs'.setup {
-            ensure_installed = { "lua" },
+            ensure_installed = { "lua", "c_sharp", "html", "css", "javascript" },
             auto_install = true,
             indent = {
                 enable = true,
             },
             highlight = {
                 enable = true,
+                -- Critical for C# stability: prevents highlight breaking mid-word
+                additional_vim_regex_highlighting = { "c_sharp" },
             },
             textobjects = {
                 move = {

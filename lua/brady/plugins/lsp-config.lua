@@ -35,6 +35,7 @@ return {
                 "dockerls",
                 "cssls",
                 "html",
+                "omnisharp",
             })
 
             vim.api.nvim_create_autocmd("LspAttach", {

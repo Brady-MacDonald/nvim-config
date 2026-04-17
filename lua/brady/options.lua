@@ -19,3 +19,7 @@ vim.opt.spelllang = "en_us"
 vim.opt.spell = true
 
 vim.opt.swapfile = false
+
+-- Syntax highlighting performance and stability
+vim.opt.redrawtime = 10000 -- Increase timeout for syntax highlighting (default 2000)
+vim.opt.synmaxcol = 500 -- Only highlight first 500 columns (prevents issues with long lines)
