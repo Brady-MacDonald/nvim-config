@@ -14,6 +14,7 @@ return {
     },
     {
         'saghen/blink.cmp',
+        build = function() require('blink.pairs').download():pwait(60000) end,
         dependencies = { 'rafamadriz/friendly-snippets', "giuxtaposition/blink-cmp-copilot" },
         version = '1.*',
         event = "InsertEnter",
