@@ -9,7 +9,7 @@ Your Neovim configuration has been successfully updated with comprehensive C# su
 - Provides IntelliSense, go-to-definition, find references, and code completion
 
 ### 2. **C# Plugin** (lua/brady/plugins/csharp.lua)
-- **csharp.nvim**: Enhanced C# support with Roslyn analyzers
+- **sharp.nvim**: Enhanced C# support with Roslyn analyzers
   - Editor config support
   - Organize imports on format
   - Import completion

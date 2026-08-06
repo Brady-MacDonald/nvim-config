@@ -64,20 +64,17 @@ plugin/              # Auto-loaded scripts: globals.lua, format.lua
 
 ## LSP Configuration (Non-Standard Pattern)
 
-### Uses vim.lsp.enable(), NOT mason-lspconfig.setup()
+### Servers are registered via `vim.lsp.enable()`, not mason-lspconfig's setup handlers
+`mason-lspconfig.setup()` only runs `ensure_installed = { "lua_ls" }`; it does NOT wire up servers.
+Actual server registration in `lua-config.lua` (lsp-config.lua):
 ```lua
--- In lsp-config.lua, this is the actual pattern used:
 vim.lsp.enable({
-    "lua_ls",
-    "clangd", 
-    "gopls",
-    "ts_ls",
+    "lua_ls", "clangd", "gopls", "ts_ls", "jsonls",
+    "pyright", "bashls", "dockerls", "cssls", "html", "omnisharp",
     -- add new servers here
 })
 ```
-
-- Mason is installed but only for :Mason commands
-- LSP servers must be manually installed via :Mason or system package manager
+- To add a new LSP server: add it to this list AND install the binary via `:Mason` (or system package manager)
 - lazydev.nvim provides Neovim API completions for lua_ls
 
 ## Snippets (Must Register Manually)

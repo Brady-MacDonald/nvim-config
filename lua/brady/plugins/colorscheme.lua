@@ -7,7 +7,6 @@ return {
             require("tokyonight").setup({
                 -- transparent = true,
                 style = "moon",
-                transparent = true,
                 on_highlights = function() end,
                 on_colors = function() end
             })

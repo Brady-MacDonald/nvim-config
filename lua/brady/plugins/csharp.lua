@@ -4,11 +4,11 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
             "mfussenegger/nvim-dap",
+            "jay-babu/mason-nvim-dap.nvim",
             "Tastyep/structlog.nvim",
         },
         ft = { "cs" },
         config = function()
-            require("mason").setup()
             require("csharp").setup({
                 lsp = {
                     -- Omnisharp settings

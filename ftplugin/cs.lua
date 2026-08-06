@@ -6,7 +6,7 @@ vim.opt_local.expandtab = true
 
 -- Enable code folding
 vim.opt_local.foldmethod = "expr"
-vim.opt_local.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt_local.foldenable = false -- Start with folds open
 
 -- Improve syntax highlighting stability
