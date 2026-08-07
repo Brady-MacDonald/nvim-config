@@ -37,6 +37,22 @@ return {
         config = function()
             require("lazydev").setup()
 
+            vim.lsp.config("lua_ls", {
+                settings = {
+                    Lua = {
+                        workspace = {
+                            library = {
+                                -- Hyprland Lua API stubs (hl global, dispatchers, config tables)
+                                "/usr/share/hypr/stubs",
+                            },
+                        },
+                        diagnostics = {
+                            globals = { "hl" },
+                        },
+                    },
+                },
+            })
+
             vim.lsp.enable({
                 "lua_ls",
                 "clangd",

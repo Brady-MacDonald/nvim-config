@@ -28,7 +28,7 @@ return {
             dashboard.button("n", "  > Notes", ":e $BRADY_MACDONALD_HOME/notes/today.md | :cd %:p:h | pwd<CR>"),
             dashboard.button("z", "  > ZSH", ":e $ZDOTDIR/.zshrc | :cd %:p:h | pwd<CR>"),
             dashboard.button("l", "󰒲  > Lazy", ":Lazy<CR>"),
-            dashboard.button("h", "  > Hyprland", ":e $XDG_CONFIG_HOME/hypr/hyprland.conf | :cd %:p:h | pwd<CR>"),
+            dashboard.button("h", "  > Hyprland", ":e $XDG_CONFIG_HOME/hypr/hyprland.lua | :cd %:p:h | pwd<CR>"),
             dashboard.button("q", "󰩈  > Quit NVIM", ":qa<CR>"),
         }
 

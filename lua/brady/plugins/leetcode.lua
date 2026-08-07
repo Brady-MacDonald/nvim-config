@@ -1,6 +1,6 @@
 return {
     "kawre/leetcode.nvim",
-    build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
+    build = ":TSUpdate html",
     event = "VeryLazy",
     dependencies = {
         "nvim-telescope/telescope.nvim",
