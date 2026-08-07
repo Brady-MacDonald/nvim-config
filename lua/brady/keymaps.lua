@@ -1,6 +1,7 @@
 vim.keymap.set({ "i", "n" }, "<leader>jk", "<escape>")
 vim.keymap.set("t", "<leader>jk", "<C-\\><C-n>")
 
+-- Close terminal and go to next window
 vim.keymap.set("t", "<C-w>c", "<C-\\><C-n><C-w>c<C-w>l")
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz')

@@ -1,16 +1,11 @@
-local luasnip = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
 
--- s - Create brand new snippet
-local s = luasnip.s
-
--- sn - SnippetNode, used to return from dynamic snippet
--- local sn - luasnip.sn
-
+local luasnip = require("luasnip")
 local snippet = luasnip.snippet
 local tNode = luasnip.text_node
 local iNode = luasnip.insert_node
 local fNode = luasnip.function_node
+local s = luasnip.s
 
 luasnip.add_snippets("lua", {
     snippet("ps", {

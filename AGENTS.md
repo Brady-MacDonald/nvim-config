@@ -144,5 +144,8 @@ return {
 - **Lua**: lua_ls with lazydev.nvim for Neovim API completions
 - **C#**: omnisharp LSP, c_sharp treesitter, csharp.nvim plugin for enhanced features
   - Razor/CSHTML: vim-razor for syntax, custom commentstring `@* %s *@`
+  - vim-razor must stay eager (`lazy = false`): if lazy-loaded on `ft`, its `syntax/razor.vim` isn't on the runtimepath when Vim sets `syntax=razor`, so no highlighting loads (white page)
+  - Treesitter is intentionally disabled for razor (`lazy/brady/plugins/treesitter.lua`) because its highlights query is too sparse and the parser is slow/unreliable; vim-razor's regex syntax is used instead
   - DAP: netcoredbg (install via Mason or from https://github.com/Samsung/netcoredbg/releases)
   - 4-space indentation (ftplugin/cs.lua)
+  - Razor: 4-space indentation in ftplugin/razor.lua (both `*.cshtml` and `*.razor` get filetype `razor`)

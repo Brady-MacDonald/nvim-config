@@ -59,6 +59,13 @@ return {
                     local filetype = vim.bo[event.buf].filetype
                     local language = vim.treesitter.language.get_lang(filetype) or filetype
 
+                    -- Razor's treesitter highlights query is incomplete (mostly
+                    -- white page). Use vim-razor's regex syntax instead.
+                    if language == "razor" then
+                        vim.bo[event.buf].syntax = "ON"
+                        return
+                    end
+
                     local parser_path = preferred_parser_path(language)
                     local has_parser = parser_path and vim.treesitter.language.add(language, { path = parser_path })
                         or vim.treesitter.language.add(language)

@@ -26,16 +26,11 @@ return {
         end,
     },
     {
+        -- Loaded eagerly so syntax/razor.vim is on the runtimepath before
+        -- the FileType "razor" event fires. If lazy-loaded on `ft`, the
+        -- syntax file is not yet available when Vim sets syntax=razor and
+        -- no highlighting is applied (white page).
         "jlcrochet/vim-razor",
-        ft = { "razor", "cshtml" },
-        config = function()
-            -- Ensure proper filetype detection
-            vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-                pattern = { "*.cshtml", "*.razor" },
-                callback = function()
-                    vim.bo.filetype = "html.cshtml.razor"
-                end,
-            })
-        end,
+        lazy = false,
     },
 }

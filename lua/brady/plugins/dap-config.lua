@@ -95,20 +95,10 @@ return {
             local dap = require("dap")
             local dap_node = require("dap-vscode-js")
 
-            for _, adapterType in ipairs({ "node", "chrome", "msedge" }) do
-                local pwaType = "pwa-" .. adapterType
-
-                if not dap.adapters[pwaType] then
-                    dap.adapters[pwaType] = {
-                        type = "server",
-                        host = "localhost",
-                        port = "${port}",
-                        executable = {
-                            command = "js-debug-adapter",
-                            args = { "${port}" },
-                        },
-                    }
-                end
+            local debugger_cmd = vim.fn.stdpath("data") .. "/mason/bin/js-debug-adapter"
+            if vim.fn.executable(debugger_cmd) == 0 then
+                vim.notify("[dap-js] Mason binary 'js-debug-adapter' is not available", vim.log.levels.ERROR)
+                return
             end
 
             local js_filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" }
@@ -200,7 +190,7 @@ return {
             -- end
 
             dap_node.setup({
-                debugger_path = "/home/bmacdonald/source/vscode-js-debug",
+                debugger_cmd = { debugger_cmd },
                 adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost', 'node', 'chrome' },
             })
         end
