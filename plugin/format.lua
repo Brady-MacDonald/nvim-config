@@ -1,10 +1,6 @@
+local no_format_dirs = { "/sportsbookreview/", "/nssmp/", }
+
 local pwd = vim.fn.getcwd()
-
-local no_format_dirs = {
-    "/sportsbookreview/",
-    "/nssmp/",
-}
-
 local format_on_save = nil
 for _, dirs in ipairs(no_format_dirs) do
     format_on_save = string.find(pwd, dirs)
